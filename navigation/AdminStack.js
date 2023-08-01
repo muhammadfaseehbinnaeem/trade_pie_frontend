@@ -9,7 +9,7 @@ import FontSize from '../constants/FontSize';
 import { useCustomFonts } from '../constants/Font';
 import LogoutButton from '../components/LogoutButton';
 import Loader from '../components/Loader';
-import AdminDashboardScreen from '../screens/AdminDashboard';
+import AdminDashboardScreen from '../screens/AdminDashboardScreen';
 import PaymentAccountScreen from '../screens/PaymentAccountScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import InvestmentsScreen from '../screens/InvestmentsScreen';
@@ -71,7 +71,7 @@ const AdminStack = () => {
                     }
                 }}
             />
-            <Drawer.Screen
+            {/* <Drawer.Screen
                 name='PaymentAccount'
                 component={PaymentAccountScreen}
                 options={{
@@ -170,7 +170,7 @@ const AdminStack = () => {
                         fontFamily: 'poppins-semibold'
                     }
                 }}
-            />
+            /> */}
         </Drawer.Navigator>
     );
 };

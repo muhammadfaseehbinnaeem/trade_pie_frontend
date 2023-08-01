@@ -18,17 +18,26 @@ import { useHttpClient } from '../hooks/http-hook';
 import ErrorAlert from '../components/ErrorAlert';
 
 const RegisterScreen = ({ navigation }) => {
-    const [requestData, setRequestData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        accountNumber: '',
-        accountType: '',
-    });
+    const [requestData, setRequestData] = useState({});
     const { error, sendRequest, clearError } = useHttpClient();
     const [isLoading, setIsLoading] = useState(false);
     const fontsLoaded = useCustomFonts();
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            setRequestData({
+                name: '',
+                email: '',
+                password: '',
+                confirmPassword: '',
+                accountNumber: '',
+                accountType: '',
+                referral: ''
+            });
+        });
+    
+        return unsubscribe;
+    }, [navigation]);
 
     if (!fontsLoaded) {
         return <Loader />;
@@ -39,7 +48,41 @@ const RegisterScreen = ({ navigation }) => {
         setIsLoading(false);
     };
 
+    const submitHandler = async () => {
+        setIsLoading(true);
+
+        try {
+            const responseData = await sendRequest(
+                '/api/users',
+                'POST',
+                JSON.stringify(requestData),
+                {'Content-Type': 'application/json'}
+            );
+            
+            if (responseData?.success) {
+                return (
+                    Alert.alert(
+                        'User Profile',
+                        'Created successfully.',
+                        [{
+                            text: 'OK',
+                            onPress: () => alertOkHandler()
+                        }],
+                        { cancelable: false }
+                    )
+                );
+            } else {
+                ErrorAlert(responseData?.error?.message);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+
+        setIsLoading(false);
+    };
+
     const registerHandler = async () => {
+        console.log(requestData);
         if (
             requestData.name === '' ||
             requestData.email === '' ||
@@ -55,37 +98,26 @@ const RegisterScreen = ({ navigation }) => {
         if (requestData.password !== requestData.confirmPassword) {
             ErrorAlert(`Password and Confirm Password don't match.`);
             return;
+        }
+
+        if (requestData.referral === '') {
+            Alert.alert(
+                'Referral Code',
+                'Are you sure you want to sign up without referral code?',
+                [
+                    {
+                        text: 'YES',
+                        onPress: () => submitHandler()
+                    },
+                    {
+                        text: 'NO',
+
+                    }
+                ],
+                { cancelable: false }
+            );
         } else {
-            setIsLoading(true);
-
-            try {
-                const responseData = await sendRequest(
-                    '/api/users',
-                    'POST',
-                    JSON.stringify(requestData),
-                    {'Content-Type': 'application/json'}
-                );
-                
-                if (responseData.success) {
-                    return (
-                        Alert.alert(
-                            'User Profile',
-                            'Created successfully.',
-                            [{
-                                text: 'OK',
-                                onPress: () => alertOkHandler()
-                            }],
-                            { cancelable: false }
-                        )
-                    );
-                } else {
-                    ErrorAlert(responseData?.error?.message);
-                }
-            } catch (err) {
-                console.log(err);
-            }
-
-            setIsLoading(false);
+            submitHandler()
         }
     };
     
@@ -107,7 +139,7 @@ const RegisterScreen = ({ navigation }) => {
                                     fontSize: FontSize.xLarge,
                                     color: Colors.primary,
                                     fontFamily: 'poppins-bold',
-                                    marginVertical: Spacing * 3
+                                    marginVertical: Spacing * 2
                                 }}
                             >
                                 Create Account
@@ -125,33 +157,44 @@ const RegisterScreen = ({ navigation }) => {
                         </View>
                         <View style={{ marginVertical: Spacing * 3 }}>
                             <AppTextInput
+                                value={requestData.name}
                                 placeholder='Name'
                                 maxLength={15}
                                 onChangeText={(text) => setRequestData({ ...requestData, name: text })}
                             />
                             <AppTextInput
+                                value={requestData.email}
                                 placeholder='Email'
                                 keyboardType='email-address'
                                 onChangeText={(text) => setRequestData({ ...requestData, email: text })}
                             />
                             <AppTextInput
+                                value={requestData.password}
                                 secureTextEntry
                                 placeholder='Password'
                                 onChangeText={(text) => setRequestData({ ...requestData, password: text })}
                             />
                             <AppTextInput
+                                value={requestData.confirmPassword}
                                 secureTextEntry
                                 placeholder='Confirm Password'
                                 onChangeText={(text) => setRequestData({ ...requestData, confirmPassword: text })}
                             />
                             <AppTextInput
+                                value={requestData.accountNumber}
                                 placeholder='Account Number e.g. 03001234567'
                                 keyboardType='numeric'
                                 onChangeText={(text) => setRequestData({ ...requestData, accountNumber: text })}
                             />
                             <AppTextInput
+                                value={requestData.accountType}
                                 placeholder='Account Type e.g. Jazzcash/Easypaisa'
                                 onChangeText={(text) => setRequestData({ ...requestData, accountType: text })}
+                            />
+                            <AppTextInput
+                                value={requestData.referral}
+                                placeholder='Referral Code (if you have)'
+                                onChangeText={(text) => setRequestData({ ...requestData, referral: text })}
                             />
                         </View>
                         <TouchableOpacity

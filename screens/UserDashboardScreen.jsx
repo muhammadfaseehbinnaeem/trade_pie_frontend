@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     SafeAreaView,
     Text,
     View,
     TouchableOpacity,
     ScrollView,
-    StyleSheet
+    StyleSheet,
+    Animated,
+    Easing
 } from 'react-native';
 import Modal from 'react-native-modal';
 
@@ -13,16 +15,30 @@ import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
 import Colors from '../constants/Colors';
 import { useCustomFonts } from '../constants/Font';
+import Currency from '../constants/Currency';
 import { useHttpClient } from '../hooks/http-hook';
+import Footer from '../components/Footer';
 import Loader from '../components/Loader';
 import ErrorAlert from '../components/ErrorAlert';
 
 const UserDashboardScreen = ({ navigation }) => {
     const { error, sendRequest, clearError } = useHttpClient();
     const [userInfo, setUserInfo] = useState({});
-    const [visible, setVisible] = useState(false);
+    const [goalsModalVisible, setGoalsModalVisible] = useState(false);
+    const [referralCodeModalVisible, setReferralCodeModalVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    // const stripAnimation = useRef(new Animated.Value(0)).current;
     const fontsLoaded = useCustomFonts();
+
+    // const startAnimation = () => {
+    //     stripAnimation.setValue(0);
+    //     Animated.timing(stripAnimation, {
+    //         toValue: 1,
+    //         duration: 2000,
+    //         easing: Easing.linear,
+    //         useNativeDriver: false,
+    //     }).start(() => startAnimation());
+    // };
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -52,6 +68,8 @@ const UserDashboardScreen = ({ navigation }) => {
 
             getUserProfile();
         });
+
+        // startAnimation();
     
         return unsubscribe;
     }, [navigation]);
@@ -60,18 +78,15 @@ const UserDashboardScreen = ({ navigation }) => {
         return <Loader />;
     }
 
-    const toggleModal = () => {
-        setVisible(!visible);
+    const toggleModal = (reference) => {
+        reference === 'referralCode' ?
+        setReferralCodeModalVisible(!referralCodeModalVisible) :
+        setGoalsModalVisible(!goalsModalVisible)
     };
 
     return (
-        <SafeAreaView>
-            <View
-                style={{
-                    paddingHorizontal: Spacing * 2,
-                    marginTop: '5%'
-                }}
-            >
+        <View style={styles.container}>
+            <View style={styles.body}>
                 <ScrollView>
                     <View
                         style={{
@@ -81,10 +96,10 @@ const UserDashboardScreen = ({ navigation }) => {
                     >
                         <Text
                             style={{
-                                fontSize: FontSize.xxLarge,
+                                fontSize: FontSize.xLarge,
                                 color: Colors.primary,
                                 fontFamily: 'poppins-semibold',
-                                marginVertical: Spacing * 3,
+                                marginVertical: Spacing
                             }}
                         >
                             {userInfo?.name}
@@ -97,13 +112,73 @@ const UserDashboardScreen = ({ navigation }) => {
                             justifyContent: 'space-between',
                             backgroundColor: Colors.onPrimary,
                             paddingVertical: Spacing,
-                            marginTop: Spacing * 3,
+                            marginVertical: Spacing / 2,
                             borderRadius: Spacing
                         }}
                     >
                         <Text
                             style={{
-                                fontSize: FontSize.xLarge,
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingLeft: Spacing * 2
+                            }}
+                        >
+                            Referral Commission:
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingRight: Spacing * 2
+                            }}
+                        >
+                            {Currency}{userInfo?.referralCommission}
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            backgroundColor: Colors.onPrimary,
+                            paddingVertical: Spacing,
+                            marginVertical: Spacing / 2,
+                            borderRadius: Spacing
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingLeft: Spacing * 2
+                            }}
+                        >
+                            Team Commission:
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingRight: Spacing * 2
+                            }}
+                        >
+                            {Currency}{userInfo?.teamCommission}
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            backgroundColor: Colors.onPrimary,
+                            paddingVertical: Spacing,
+                            marginVertical: Spacing / 2,
+                            borderRadius: Spacing
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
                                 fontFamily: 'poppins-regular',
                                 paddingLeft: Spacing * 2
                             }}
@@ -112,12 +187,12 @@ const UserDashboardScreen = ({ navigation }) => {
                         </Text>
                         <Text
                             style={{
-                                fontSize: FontSize.xLarge,
+                                fontSize: FontSize.large,
                                 fontFamily: 'poppins-regular',
                                 paddingRight: Spacing * 2
                             }}
                         >
-                            Rs. {userInfo?.totalInvestment}
+                            {Currency}{userInfo?.investment}
                         </Text>
                     </View>
                     <View
@@ -127,13 +202,13 @@ const UserDashboardScreen = ({ navigation }) => {
                             justifyContent: 'space-between',
                             backgroundColor: Colors.onPrimary,
                             paddingVertical: Spacing,
-                            marginTop: Spacing * 3,
+                            marginVertical: Spacing / 2,
                             borderRadius: Spacing
                         }}
                     >
                         <Text
                             style={{
-                                fontSize: FontSize.xLarge,
+                                fontSize: FontSize.large,
                                 fontFamily: 'poppins-regular',
                                 paddingLeft: Spacing * 2
                             }}
@@ -142,12 +217,12 @@ const UserDashboardScreen = ({ navigation }) => {
                         </Text>
                         <Text
                             style={{
-                                fontSize: FontSize.xLarge,
+                                fontSize: FontSize.large,
                                 fontFamily: 'poppins-regular',
                                 paddingRight: Spacing * 2
                             }}
                         >
-                            Rs. {userInfo?.totalEarning}
+                            {Currency}{userInfo?.earning}
                         </Text>
                     </View>
                     <View
@@ -157,13 +232,13 @@ const UserDashboardScreen = ({ navigation }) => {
                             justifyContent: 'space-between',
                             backgroundColor: Colors.onPrimary,
                             paddingVertical: Spacing,
-                            marginTop: Spacing * 3,
+                            marginVertical: Spacing / 2,
                             borderRadius: Spacing
                         }}
                     >
                         <Text
                             style={{
-                                fontSize: FontSize.xLarge,
+                                fontSize: FontSize.large,
                                 fontFamily: 'poppins-regular',
                                 paddingLeft: Spacing * 2
                             }}
@@ -172,57 +247,79 @@ const UserDashboardScreen = ({ navigation }) => {
                         </Text>
                         <Text
                             style={{
-                                fontSize: FontSize.xLarge,
+                                fontSize: FontSize.large,
                                 fontFamily: 'poppins-regular',
                                 paddingRight: Spacing * 2
                             }}
                         >
-                            Rs. {userInfo?.totalProfit}
+                            {Currency}{userInfo?.profit}
                         </Text>
                     </View>
-                    <View
-                        style={{
-                            marginVertical: Spacing * 3,
-                            paddingVertical: Spacing * 2
-                        }}
-                    >
-                        <TouchableOpacity
-                            style={{
-                                padding: Spacing,
-                                backgroundColor: Colors.primary,
-                                marginTop: Spacing * 3,
-                                marginHorizontal: Spacing * 10,
-                                borderRadius: Spacing,
-                                shadowColor: Colors.primary,
-                                shadowOffset: {
-                                width: 0,
-                                height: Spacing
-                                },
-                                shadowOpacity: 0.3,
-                                shadowRadius: Spacing
-                            }}
-                            onPress={() => toggleModal()}
-                        >
+                    <View style={{ marginTop: Spacing * 4 }}>
+                        <TouchableOpacity onPress={() => toggleModal('referralCode')}>
                             <Text
                                 style={{
-                                    color: Colors.onPrimary,
-                                    fontFamily: 'poppins-bold',
-                                    fontSize: FontSize.large,
-                                    textAlign: 'center'
+                                    fontFamily: 'poppins-semibold',
+                                    fontSize: FontSize.small,
+                                    color: Colors.primary,
+                                    alignSelf: 'center'
                                 }}
                             >
-                                See Goals
+                                My referral code
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    <Modal visible={visible} transparent={true} animationType="slide">
+                    <View style={{ marginTop: Spacing }}>
+                        <TouchableOpacity onPress={() => toggleModal('goals')}>
+                            <Text
+                                style={{
+                                    fontFamily: 'poppins-semibold',
+                                    fontSize: FontSize.small,
+                                    color: Colors.primary,
+                                    alignSelf: 'center'
+                                }}
+                            >
+                                My goals
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    {/* <View style={styles.animationContainer}>
+                        <Animated.View
+                            style={[
+                            styles.strip,
+                            {
+                                width: stripAnimation.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: ['0%', '100%'],
+                                }),
+                            },
+                            ]}
+                        >
+                        <Text style={styles.text}>Withdrawal Timing: 12:00 AM to 6:00 AM</Text>
+                        </Animated.View>
+                    </View> */}
+                    <View style={ styles.horizontalSpacer } />
+                    <Modal visible={referralCodeModalVisible} transparent={true} animationType="slide">
+                        <View style={styles.modalContainer}>
+                            <View style={styles.modalContent}>
+                            <Text style={styles.heading}>Your Referral Code</Text>
+                            <View style={styles.card}>
+                                <Text style={styles.cardText}>{userInfo._id}</Text>
+                            </View>
+                            <TouchableOpacity style={styles.okButton} onPress={() => toggleModal('referralCode')}>
+                                <Text style={styles.okButtonText}>OK</Text>
+                            </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
+                    <Modal visible={goalsModalVisible} transparent={true} animationType="slide">
                         <View style={styles.modalContainer}>
                             <View style={styles.modalContent}>
                             <Text style={styles.heading}>Your Goals</Text>
                             <View style={styles.card}>
                                 <Text style={styles.cardText}>{userInfo.goals}</Text>
                             </View>
-                            <TouchableOpacity style={styles.okButton} onPress={() => toggleModal()}>
+                            <TouchableOpacity style={styles.okButton} onPress={() => toggleModal('goals')}>
                                 <Text style={styles.okButtonText}>OK</Text>
                             </TouchableOpacity>
                             </View>
@@ -230,19 +327,34 @@ const UserDashboardScreen = ({ navigation }) => {
                     </Modal>
                 </ScrollView>
             </View>
-        </SafeAreaView>
+            <Footer />
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    body: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: Spacing * 3,
+    },
     modalContainer: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.6)'
     },
+    horizontalSpacer: {
+        paddingHorizontal: Spacing * 2,
+        marginHorizontal: Spacing * 15
+    },
     modalContent: {
-        width: '70%',
+        width: '80%',
         height: '40%',
         backgroundColor: Colors.onPrimary,
         borderRadius: 10,
@@ -269,7 +381,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary,
         borderRadius: 5,
         alignItems: 'center',
-        padding: 10,
+        padding: Spacing,
         marginBottom: Spacing * 2,
         marginHorizontal: Spacing * 2
     },
@@ -277,7 +389,20 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'poppins-semibold',
         color: Colors.onPrimary
-    }
+    },
+    animationContainer: {
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        backgroundColor: Colors.lightPrimary,
+        height: 50,
+        overflow: 'visible',
+    },
+    strip: {
+        height: '100%',
+        backgroundColor: 'white',
+        justifyContent: 'center',
+        paddingHorizontal: 10,
+    },
 });
 
 export default UserDashboardScreen;

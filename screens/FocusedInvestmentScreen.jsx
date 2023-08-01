@@ -10,10 +10,12 @@ import {
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 
+import Spacing from '../constants/Spacing';
 import { useCustomFonts } from '../constants/Font';
 import Currency from '../constants/Currency';
 import { AuthContext } from "../context/AuthContext";
 import { useHttpClient, baseUrl } from '../hooks/http-hook';
+import Footer from '../components/Footer';
 import Loader from '../components/Loader';
 import ErrorAlert from '../components/ErrorAlert';
 import AppTextInput from "../components/AppTextInput";
@@ -193,66 +195,86 @@ const FocusedInvestmentScreen = ({ navigation }) => {
     };
     
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <Image
-                source={{uri: `${baseUrl}/${investmentData.image}`}}
-                style={styles.image}
-                resizeMode="cover"
-            />
-            <View style={styles.card}>
-                <Text>ID: {investmentData._id}</Text>
-                <Text>User ID: {investmentData.userId}</Text>
-                <Text>Name: {investmentData.userName}</Text>
-                <Text>Account Number: {investmentData.userAccountNumber}</Text>
-                <Text>Account Type: {investmentData.userAccountType}</Text>
-                <Text>Amount: Rs. {investmentData.amount}</Text>
-                <Text>
-                    Status: {
-                        <Text style={[styles.status, { color: investmentData.color }]}>
-                            {investmentData.status}
+        <View style={styles.mainContainer}>
+            <View style={styles.body}>
+                <ScrollView contentContainerStyle={styles.container}>
+                    <Image
+                        source={{uri: `${baseUrl}/${investmentData.image}`}}
+                        style={styles.image}
+                        resizeMode="cover"
+                    />
+                    <View style={styles.card}>
+                        <Text>ID: {investmentData._id}</Text>
+                        <Text>User ID: {investmentData.userId}</Text>
+                        <Text>Name: {investmentData.userName}</Text>
+                        <Text>Account Number: {investmentData.userAccountNumber}</Text>
+                        <Text>Account Type: {investmentData.userAccountType}</Text>
+                        <Text>Amount: Rs. {investmentData.amount}</Text>
+                        <Text>
+                            Status: {
+                                <Text style={[styles.status, { color: investmentData.color }]}>
+                                    {investmentData.status}
+                                </Text>
+                            }
                         </Text>
-                    }
-                </Text>
-                {
-                    (
-                        investmentData.status === 'Approved' ||
-                        investmentData.status === 'Rejected' ||
-                        !userInfo.isAdmin
-                    ) ?
-                    ( <Text>Profit: {Currency}{investmentData.profit}</Text> ) :
-                    (
-                        <>
-                            <AppTextInput
-                                style={styles.input}
-                                placeholder={`Enter profit in ${Currency}`}
-                                keyboardType='numeric'
-                                onChangeText={(text) => setInvestmentData({ ...investmentData, profit: text })}
-                            />
-                
-                            <View style={styles.buttonsContainer}>
-                            <TouchableOpacity
-                                style={[styles.button, { backgroundColor: 'green' }]}
-                                onPress={() => approveHandler()}
-                                disabled={!investmentData.profit || investmentData.profit == 0}
-                            >
-                                <Text style={styles.buttonText}>Approve</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={[styles.button, { backgroundColor: 'red' }]}
-                                onPress={() => rejectHandler()}
-                            >
-                                <Text style={styles.buttonText}>Reject</Text>
-                            </TouchableOpacity>
-                            </View>
-                        </>
-                    )
-                }
+                        {
+                            (
+                                investmentData.status === 'Approved' ||
+                                investmentData.status === 'Rejected' ||
+                                !userInfo.isAdmin
+                            ) ?
+                            ( <Text>Profit: {Currency}{investmentData.profit}</Text> ) :
+                            (
+                                <>
+                                    <AppTextInput
+                                        style={styles.input}
+                                        placeholder={`Enter profit in ${Currency}`}
+                                        keyboardType='numeric'
+                                        onChangeText={(text) => setInvestmentData({ ...investmentData, profit: text })}
+                                    />
+                        
+                                    <View style={styles.buttonsContainer}>
+                                    <TouchableOpacity
+                                        style={[styles.button, { backgroundColor: 'green' }]}
+                                        onPress={() => approveHandler()}
+                                        disabled={!investmentData.profit || investmentData.profit == 0}
+                                    >
+                                        <Text style={styles.buttonText}>Approve</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={[styles.button, { backgroundColor: 'red' }]}
+                                        onPress={() => rejectHandler()}
+                                    >
+                                        <Text style={styles.buttonText}>Reject</Text>
+                                    </TouchableOpacity>
+                                    </View>
+                                </>
+                            )
+                        }
+                    </View>
+                    <View style={ styles.horizontalSpacer } />
+                </ScrollView>
             </View>
-        </ScrollView>
+            <Footer />
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    body: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: Spacing * 3,
+    },
+    horizontalSpacer: {
+        paddingHorizontal: Spacing * 2,
+        marginHorizontal: Spacing * 15
+    },
     container: {
         flexGrow: 1,
         padding: 20,
@@ -261,14 +283,14 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '30%',
-        aspectRatio: 3 / 5,
+        aspectRatio: 3 / 5
     },
     card: {
         padding: 20,
         borderWidth: 1,
         borderColor: 'gray',
         borderRadius: 8,
-        marginVertical: 20,
+        marginVertical: Spacing * 5,
         width: '100%',
     },
     status: {

@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
         color: Colors.text,
     },
     separator: {
-        height: Spacing * 2,
+        height: Spacing,
     },
     overlay: {
         flex: 1,

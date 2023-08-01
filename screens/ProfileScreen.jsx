@@ -6,6 +6,7 @@ import {
     View,
     TouchableOpacity,
     ScrollView,
+    StyleSheet,
     Alert
 } from 'react-native';
 
@@ -17,6 +18,7 @@ import { useHttpClient } from '../hooks/http-hook';
 import AppTextInput from '../components/AppTextInput';
 import Loader from '../components/Loader';
 import ErrorAlert from '../components/ErrorAlert';
+import Footer from '../components/Footer';
 
 const ProfileScreen = ({ navigation }) => {
     const { error, sendRequest, clearError } = useHttpClient();
@@ -127,8 +129,8 @@ const ProfileScreen = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView>
-            <View style={{ padding: '5%' }}>
+        <View style={styles.container} >
+            <View style={styles.body}>
                 <ScrollView>
                     <View style={{ alignItems: 'center' }}>
                         <Text
@@ -191,10 +193,29 @@ const ProfileScreen = ({ navigation }) => {
                             </Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={ styles.horizontalSpacer } />
                 </ScrollView>
             </View>
-        </SafeAreaView>
+            <Footer />
+        </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    body: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: Spacing * 3,
+    },
+    horizontalSpacer: {
+        paddingHorizontal: Spacing * 2,
+        marginHorizontal: Spacing * 15
+    },
+});
 
 export default ProfileScreen;

@@ -76,7 +76,7 @@ const PaymentAccountScreen = ({ navigation }) => {
             );
             
             if (responseData.success) {
-                console.log(responseData.data);
+                // console.log(responseData.data);
                 
                 return (
                     Alert.alert(

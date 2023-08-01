@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -17,11 +17,16 @@ import Loader from '../components/Loader';
 
 const LoginScreen = ({ navigation }) => {
     const { login } = useContext(AuthContext);
-    const [requestData, setRequestData] = useState({
-        email: '',
-        password: '',
-    });
+    const [requestData, setRequestData] = useState({});
     const fontsLoaded = useCustomFonts();
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            setRequestData({ email: '', password: '' });
+        });
+    
+        return unsubscribe;
+    }, [navigation]);
 
     if (!fontsLoaded) {
         return <Loader />;
@@ -60,11 +65,13 @@ const LoginScreen = ({ navigation }) => {
                     </View>
                     <View style={{ marginVertical: Spacing * 3 }}>
                         <AppTextInput
+                            value={requestData.email}
                             placeholder='Email'
                             keyboardType='email-address'
                             onChangeText={(text) => setRequestData({ ...requestData, email: text })}
                         />
                         <AppTextInput
+                            value={requestData.password}
                             secureTextEntry
                             placeholder='Password'
                             onChangeText={(text) => setRequestData({ ...requestData, password: text })}

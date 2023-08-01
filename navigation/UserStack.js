@@ -44,7 +44,7 @@ const UserStack = () => {
     }
 
     return (
-        <Drawer.Navigator initialRouteName='UserDashboard' drawerContent={LogoutButton}>
+        <Drawer.Navigator initialRouteName='Profile' drawerContent={LogoutButton}>
             <Drawer.Screen
                 name='UserDashboard'
                 component={UserDashboardScreen}
@@ -56,7 +56,7 @@ const UserStack = () => {
                     },
                     headerStyle: { backgroundColor: Colors.primary, },
                     headerTintColor: Colors.onPrimary,
-                    headerStatusBarHeight: Spacing * 5,
+                    headerStatusBarHeight: Spacing * 4,
                     title: 'Dashboard',
                     drawerActiveTintColor: Colors.onPrimary,
                     drawerActiveBackgroundColor: Colors.primary,
@@ -81,7 +81,7 @@ const UserStack = () => {
                     },
                     headerStyle: { backgroundColor: Colors.primary, },
                     headerTintColor: Colors.onPrimary,
-                    headerStatusBarHeight: Spacing * 5,
+                    headerStatusBarHeight: Spacing * 4,
                     title: 'Profile',
                     drawerActiveTintColor: Colors.onPrimary,
                     drawerActiveBackgroundColor: Colors.primary,
@@ -106,7 +106,7 @@ const UserStack = () => {
                     },
                     headerStyle: { backgroundColor: Colors.primary, },
                     headerTintColor: Colors.onPrimary,
-                    headerStatusBarHeight: Spacing * 5,
+                    headerStatusBarHeight: Spacing * 4,
                     title: 'Change Password',
                     drawerActiveTintColor: Colors.onPrimary,
                     drawerActiveBackgroundColor: Colors.primary,
@@ -131,7 +131,7 @@ const UserStack = () => {
                     },
                     headerStyle: { backgroundColor: Colors.primary, },
                     headerTintColor: Colors.onPrimary,
-                    headerStatusBarHeight: Spacing * 5,
+                    headerStatusBarHeight: Spacing * 4,
                     title: 'My Investments',
                     drawerActiveTintColor: Colors.onPrimary,
                     drawerActiveBackgroundColor: Colors.primary,
@@ -156,7 +156,7 @@ const UserStack = () => {
                     },
                     headerStyle: { backgroundColor: Colors.primary, },
                     headerTintColor: Colors.onPrimary,
-                    headerStatusBarHeight: Spacing * 5,
+                    headerStatusBarHeight: Spacing * 4,
                     title: 'Invest Money',
                     drawerActiveTintColor: Colors.onPrimary,
                     drawerActiveBackgroundColor: Colors.primary,

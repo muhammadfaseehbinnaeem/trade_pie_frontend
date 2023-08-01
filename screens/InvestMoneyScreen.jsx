@@ -18,6 +18,7 @@ import Colors from '../constants/Colors';
 import { useCustomFonts } from '../constants/Font';
 import Currency from '../constants/Currency';
 import { useHttpClient } from '../hooks/http-hook';
+import Footer from '../components/Footer';
 import AppTextInput from '../components/AppTextInput';
 import Loader from '../components/Loader';
 import ErrorAlert from '../components/ErrorAlert';
@@ -158,7 +159,7 @@ const InvestMoneyScreen = ({ navigation }) => {
             );
 
             if (responseData.success) {
-                setPaidAmount(responseData.amount);
+                setPaidAmount(responseData?.amount);
                 toggleModal();
             } else {
                 ErrorAlert(responseData?.error?.message);
@@ -171,8 +172,8 @@ const InvestMoneyScreen = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView>
-            <View style={{ padding: '5%' }}>
+        <View style={styles.mainContainer}>
+            <View style={styles.body}>
                 <ScrollView>
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <Text
@@ -331,13 +332,29 @@ const InvestMoneyScreen = ({ navigation }) => {
                             </View>
                         </Modal>
                     </View>
+                    <View style={ styles.horizontalSpacer } />
                 </ScrollView>
             </View>
-        </SafeAreaView>
+            <Footer />
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    body: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: Spacing * 3,
+    },
+    horizontalSpacer: {
+        paddingHorizontal: Spacing * 2,
+        marginHorizontal: Spacing * 15
+    },
     container: {
         paddingHorizontal: Spacing * 2,
         paddingVertical: Spacing,
@@ -369,7 +386,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // This adds a semi-transparent overlay
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContent: {
         backgroundColor: Colors.onPrimary,
@@ -378,13 +395,6 @@ const styles = StyleSheet.create({
         width: Spacing * 30,
         height: Spacing * 60,
         borderRadius: Spacing,
-        // textAlign: 'center'
-        
-        // fontFamily: 'poppins-semibold',
-        // color: Colors.primary,
-        // fontSize: FontSize.large
-
-        // elevation: 5, // Add shadow for Android
     },
 });
 
