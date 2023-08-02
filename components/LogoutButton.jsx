@@ -23,7 +23,7 @@ const LogoutButton = (props) => {
 
     const signOutHandler = () => {
         Alert.alert(
-            'Log out',
+            'Log Out',
             'Are you sure you want to log out of your account?',
             [
                 {
@@ -43,7 +43,7 @@ const LogoutButton = (props) => {
                 style={{
                     flex: 1,
                     justifyContent: 'flex-end',
-                    marginTop: '60%',
+                    marginTop: '30%',
                 }}
             >
                 <View

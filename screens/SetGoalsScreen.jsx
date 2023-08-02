@@ -15,6 +15,7 @@ import FontSize from '../constants/FontSize';
 import Colors from '../constants/Colors';
 import { useCustomFonts } from '../constants/Font';
 import { useHttpClient } from '../hooks/http-hook';
+import Footer from '../components/Footer';
 import Loader from '../components/Loader';
 import ErrorAlert from '../components/ErrorAlert';
 
@@ -98,7 +99,7 @@ const SetGoalsScreen = ({ navigation }) => {
     };
 
     const setHandler = () => {
-        if (requestData.announcement === ''  ) {
+        if (requestData.goals === '') {
             ErrorAlert('Goals are required.');
             return;
         }
@@ -118,8 +119,8 @@ const SetGoalsScreen = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView>
-            <View style={{ padding: '5%' }}>
+        <View style={styles.mainContainer}>
+            <View style={styles.body}>
                 <ScrollView>
                     <View style={{ alignItems: 'center' }}>
                         <Text
@@ -137,11 +138,11 @@ const SetGoalsScreen = ({ navigation }) => {
                         <View style={styles.container}>
                             <TextInput
                                 style={styles.input}
-                                value={requestData.announcement}
+                                value={requestData.goals}
                                 multiline={true}
                                 placeholder="Enter goals here..."
                                 textAlignVertical="top"
-                                onChangeText={(text) => setRequestData({ ...requestData, announcement: text })}
+                                onChangeText={(text) => setRequestData({ ...requestData, goals: text })}
 
                             />
                             </View>
@@ -174,13 +175,29 @@ const SetGoalsScreen = ({ navigation }) => {
                             </Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={ styles.horizontalSpacer } />
                 </ScrollView>
             </View>
-        </SafeAreaView>
+            <Footer />
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    body: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: Spacing * 3
+    },
+    horizontalSpacer: {
+        paddingHorizontal: Spacing * 2,
+        marginHorizontal: Spacing * 15
+    },
     container: {
         padding: 10,
         backgroundColor: Colors.onPrimary,

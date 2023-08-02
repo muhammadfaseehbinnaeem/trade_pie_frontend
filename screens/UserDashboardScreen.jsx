@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-    SafeAreaView,
     Text,
     View,
     TouchableOpacity,
     ScrollView,
-    StyleSheet,
-    Animated,
-    Easing
+    StyleSheet
 } from 'react-native';
 import Modal from 'react-native-modal';
 
@@ -27,18 +24,7 @@ const UserDashboardScreen = ({ navigation }) => {
     const [goalsModalVisible, setGoalsModalVisible] = useState(false);
     const [referralCodeModalVisible, setReferralCodeModalVisible] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    // const stripAnimation = useRef(new Animated.Value(0)).current;
     const fontsLoaded = useCustomFonts();
-
-    // const startAnimation = () => {
-    //     stripAnimation.setValue(0);
-    //     Animated.timing(stripAnimation, {
-    //         toValue: 1,
-    //         duration: 2000,
-    //         easing: Easing.linear,
-    //         useNativeDriver: false,
-    //     }).start(() => startAnimation());
-    // };
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -68,8 +54,6 @@ const UserDashboardScreen = ({ navigation }) => {
 
             getUserProfile();
         });
-
-        // startAnimation();
     
         return unsubscribe;
     }, [navigation]);
@@ -283,21 +267,6 @@ const UserDashboardScreen = ({ navigation }) => {
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    {/* <View style={styles.animationContainer}>
-                        <Animated.View
-                            style={[
-                            styles.strip,
-                            {
-                                width: stripAnimation.interpolate({
-                                inputRange: [0, 1],
-                                outputRange: ['0%', '100%'],
-                                }),
-                            },
-                            ]}
-                        >
-                        <Text style={styles.text}>Withdrawal Timing: 12:00 AM to 6:00 AM</Text>
-                        </Animated.View>
-                    </View> */}
                     <View style={ styles.horizontalSpacer } />
                     <Modal visible={referralCodeModalVisible} transparent={true} animationType="slide">
                         <View style={styles.modalContainer}>

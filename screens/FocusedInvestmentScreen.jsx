@@ -129,6 +129,7 @@ const FocusedInvestmentScreen = ({ navigation }) => {
     };
 
     const rejectAlertYesHandler = async() => {
+        investmentData.profit = 0;
         investmentData.isActive = false;
         investmentData.isApproved = false;
         investmentData.status = 'Rejected';
@@ -282,7 +283,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: '30%',
+        height: '25%',
         aspectRatio: 3 / 5
     },
     card: {

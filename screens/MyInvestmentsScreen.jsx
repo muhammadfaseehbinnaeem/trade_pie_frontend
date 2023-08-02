@@ -27,6 +27,7 @@ const MyInvestmentsScreen = ({ navigation }) => {
 
     const investmentsNotFoundAlertOkHandler = () => {
         navigation.navigate('UserDashboard');
+        setStatus('All');
         setIsLoading(false);
     };
 
@@ -52,7 +53,7 @@ const MyInvestmentsScreen = ({ navigation }) => {
                             return (
                                 Alert.alert(
                                     'Message',
-                                    `You don't have any investments.`,
+                                    `You don't have any investments in this category.`,
                                     [{
                                         text: 'OK',
                                         onPress: () => investmentsNotFoundAlertOkHandler()
@@ -111,7 +112,7 @@ const MyInvestmentsScreen = ({ navigation }) => {
                         return (
                             Alert.alert(
                                 'Message',
-                                'No investments found.',
+                                `You don't have any investments in this category.`,
                                 [{
                                     text: 'OK',
                                     onPress: () => investmentsNotFoundAlertOkHandler()

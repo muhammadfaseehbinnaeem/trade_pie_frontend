@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
-    SafeAreaView,
     Text,
     View,
-    TouchableOpacity,
-    ScrollView
+    ScrollView,
+    StyleSheet
 } from 'react-native';
 
 import Spacing from '../constants/Spacing';
@@ -12,6 +11,7 @@ import FontSize from '../constants/FontSize';
 import Colors from '../constants/Colors';
 import { useCustomFonts } from '../constants/Font';
 import { useHttpClient } from '../hooks/http-hook';
+import Footer from '../components/Footer';
 import Loader from '../components/Loader';
 import ErrorAlert from '../components/ErrorAlert';
 
@@ -34,8 +34,8 @@ const AdminDashboardScreen = ({ navigation }) => {
                         {'Content-Type': 'application/json'}
                     );
                     
-                    if (responseData.success) {
-                        setDashboardData(responseData.data);
+                    if (responseData?.success) {
+                        setDashboardData(responseData?.data);
 
                     } else {
                         ErrorAlert(responseData?.error?.message);
@@ -58,13 +58,8 @@ const AdminDashboardScreen = ({ navigation }) => {
     }
 
     return (
-        <SafeAreaView>
-            <View
-                style={{
-                    paddingHorizontal: Spacing * 2,
-                    marginTop: '5%'
-                }}
-            >
+        <View style={styles.container}>
+            <View style={styles.body}>
                 <ScrollView>
                     <View
                         style={{
@@ -74,10 +69,166 @@ const AdminDashboardScreen = ({ navigation }) => {
                     >
                         <Text
                             style={{
-                                fontSize: FontSize.xxLarge,
+                                fontSize: FontSize.xLarge,
                                 color: Colors.primary,
                                 fontFamily: 'poppins-semibold',
-                                marginVertical: Spacing * 3
+                                marginVertical: Spacing
+                            }}
+                        >
+                            Referral Commissions
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            backgroundColor: Colors.onPrimary,
+                            paddingVertical: Spacing,
+                            marginVertical: Spacing / 2,
+                            borderRadius: Spacing
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingLeft: Spacing * 2
+                            }}
+                        >
+                            Approved:
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingRight: Spacing * 2
+                            }}
+                        >
+                            {dashboardData?.approvedReferralCommissionsCount}
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            backgroundColor: Colors.onPrimary,
+                            paddingVertical: Spacing,
+                            marginVertical: Spacing / 2,
+                            borderRadius: Spacing
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingLeft: Spacing * 2
+                            }}
+                        >
+                            Pending:
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingRight: Spacing * 2
+                            }}
+                        >
+                            {dashboardData?.pendingReferralCommissionsCount}
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            alignItems: 'flex-start',
+                            marginLeft: Spacing,
+                            marginTop: Spacing * 3,
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: FontSize.xLarge,
+                                color: Colors.primary,
+                                fontFamily: 'poppins-semibold',
+                                marginVertical: Spacing
+                            }}
+                        >
+                            Team Commissions
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            backgroundColor: Colors.onPrimary,
+                            paddingVertical: Spacing,
+                            marginVertical: Spacing / 2,
+                            borderRadius: Spacing
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingLeft: Spacing * 2
+                            }}
+                        >
+                            Approved:
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingRight: Spacing * 2
+                            }}
+                        >
+                            {dashboardData?.approvedTeamCommissionsCount}
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            backgroundColor: Colors.onPrimary,
+                            paddingVertical: Spacing,
+                            marginVertical: Spacing / 2,
+                            borderRadius: Spacing
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingLeft: Spacing * 2
+                            }}
+                        >
+                            Pending:
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingRight: Spacing * 2
+                            }}
+                        >
+                            {dashboardData?.pendingTeamCommissionsCount}
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            alignItems: 'flex-start',
+                            marginLeft: Spacing,
+                            marginTop: Spacing * 3,
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: FontSize.xLarge,
+                                color: Colors.primary,
+                                fontFamily: 'poppins-semibold',
+                                marginVertical: Spacing
                             }}
                         >
                             Investments
@@ -90,13 +241,13 @@ const AdminDashboardScreen = ({ navigation }) => {
                             justifyContent: 'space-between',
                             backgroundColor: Colors.onPrimary,
                             paddingVertical: Spacing,
-                            marginTop: Spacing * 3,
+                            marginVertical: Spacing / 2,
                             borderRadius: Spacing
                         }}
                     >
                         <Text
                             style={{
-                                fontSize: FontSize.xLarge,
+                                fontSize: FontSize.large,
                                 fontFamily: 'poppins-regular',
                                 paddingLeft: Spacing * 2
                             }}
@@ -105,12 +256,12 @@ const AdminDashboardScreen = ({ navigation }) => {
                         </Text>
                         <Text
                             style={{
-                                fontSize: FontSize.xLarge,
+                                fontSize: FontSize.large,
                                 fontFamily: 'poppins-regular',
                                 paddingRight: Spacing * 2
                             }}
                         >
-                            {dashboardData?.approvedCount}
+                            {dashboardData?.approvedInvestmentsCount}
                         </Text>
                     </View>
                     <View
@@ -120,13 +271,13 @@ const AdminDashboardScreen = ({ navigation }) => {
                             justifyContent: 'space-between',
                             backgroundColor: Colors.onPrimary,
                             paddingVertical: Spacing,
-                            marginTop: Spacing * 3,
+                            marginVertical: Spacing / 2,
                             borderRadius: Spacing
                         }}
                     >
                         <Text
                             style={{
-                                fontSize: FontSize.xLarge,
+                                fontSize: FontSize.large,
                                 fontFamily: 'poppins-regular',
                                 paddingLeft: Spacing * 2
                             }}
@@ -135,12 +286,12 @@ const AdminDashboardScreen = ({ navigation }) => {
                         </Text>
                         <Text
                             style={{
-                                fontSize: FontSize.xLarge,
+                                fontSize: FontSize.large,
                                 fontFamily: 'poppins-regular',
                                 paddingRight: Spacing * 2
                             }}
                         >
-                            {dashboardData?.rejectedCount}
+                            {dashboardData?.rejectedInvestmentsCount}
                         </Text>
                     </View>
                     <View
@@ -150,13 +301,14 @@ const AdminDashboardScreen = ({ navigation }) => {
                             justifyContent: 'space-between',
                             backgroundColor: Colors.onPrimary,
                             paddingVertical: Spacing,
-                            marginTop: Spacing * 3,
+                            marginVertical: Spacing / 2,
+                            marginBottom: Spacing * 3,
                             borderRadius: Spacing
                         }}
                     >
                         <Text
                             style={{
-                                fontSize: FontSize.xLarge,
+                                fontSize: FontSize.large,
                                 fontFamily: 'poppins-regular',
                                 paddingLeft: Spacing * 2
                             }}
@@ -165,53 +317,37 @@ const AdminDashboardScreen = ({ navigation }) => {
                         </Text>
                         <Text
                             style={{
-                                fontSize: FontSize.xLarge,
+                                fontSize: FontSize.large,
                                 fontFamily: 'poppins-regular',
                                 paddingRight: Spacing * 2
                             }}
                         >
-                            {dashboardData?.pendingCount}
+                            {dashboardData?.pendingInvestmentsCount}
                         </Text>
                     </View>
-                    <View
-                        style={{
-                            marginVertical: Spacing * 3,
-                            paddingVertical: Spacing * 2
-                        }}
-                    >
-                        <TouchableOpacity
-                            style={{
-                                padding: Spacing,
-                                backgroundColor: Colors.primary,
-                                marginTop: Spacing * 3,
-                                marginHorizontal: Spacing * 10,
-                                borderRadius: Spacing,
-                                shadowColor: Colors.primary,
-                                shadowOffset: {
-                                width: 0,
-                                height: Spacing
-                                },
-                                shadowOpacity: 0.3,
-                                shadowRadius: Spacing
-                            }}
-                            onPress={() => navigation.navigate('SetGoals')}
-                        >
-                            <Text
-                                style={{
-                                    color: Colors.onPrimary,
-                                    fontFamily: 'poppins-bold',
-                                    fontSize: FontSize.large,
-                                    textAlign: 'center'
-                                }}
-                            >
-                                Set Goals
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+                    <View style={ styles.horizontalSpacer } />
                 </ScrollView>
             </View>
-        </SafeAreaView>
+            <Footer />
+        </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    body: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: Spacing * 3
+    },
+    horizontalSpacer: {
+        paddingHorizontal: Spacing * 2,
+        marginHorizontal: Spacing * 15
+    },
+});
 
 export default AdminDashboardScreen;

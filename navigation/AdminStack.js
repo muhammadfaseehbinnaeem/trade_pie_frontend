@@ -57,21 +57,21 @@ const AdminStack = () => {
                     },
                     headerStyle: { backgroundColor: Colors.primary, },
                     headerTintColor: Colors.onPrimary,
-                    headerStatusBarHeight: Spacing * 5,
+                    headerStatusBarHeight: Spacing * 4,
                     title: 'Admin Dashboard',
                     drawerActiveTintColor: Colors.onPrimary,
                     drawerActiveBackgroundColor: Colors.primary,
                     drawerInactiveTintColor: Colors.primary,
                     drawerInactiveBackgroundColor: Colors.onPrimary,
                     drawerLabelStyle: {
-                        fontSize: FontSize.large,
+                        fontSize: FontSize.medium,
                         paddingVertical: Spacing,
                         textAlign: 'center',
                         fontFamily: 'poppins-semibold'
                     }
                 }}
             />
-            {/* <Drawer.Screen
+            <Drawer.Screen
                 name='PaymentAccount'
                 component={PaymentAccountScreen}
                 options={{
@@ -82,14 +82,14 @@ const AdminStack = () => {
                     },
                     headerStyle: { backgroundColor: Colors.primary, },
                     headerTintColor: Colors.onPrimary,
-                    headerStatusBarHeight: Spacing * 5,
+                    headerStatusBarHeight: Spacing * 4,
                     title: 'Payment Account',
                     drawerActiveTintColor: Colors.onPrimary,
                     drawerActiveBackgroundColor: Colors.primary,
                     drawerInactiveTintColor: Colors.primary,
                     drawerInactiveBackgroundColor: Colors.onPrimary,
                     drawerLabelStyle: {
-                        fontSize: FontSize.large,
+                        fontSize: FontSize.medium,
                         paddingVertical: Spacing,
                         textAlign: 'center',
                         fontFamily: 'poppins-semibold'
@@ -105,16 +105,16 @@ const AdminStack = () => {
                         fontSize: 25,
                         fontFamily: 'poppins-semibold'
                     },
-                    headerStyle: { backgroundColor: Colors.primary, },
+                    headerStyle: { backgroundColor: Colors.primary },
                     headerTintColor: Colors.onPrimary,
-                    headerStatusBarHeight: Spacing * 5,
+                    headerStatusBarHeight: Spacing * 4,
                     title: 'Change Password',
                     drawerActiveTintColor: Colors.onPrimary,
                     drawerActiveBackgroundColor: Colors.primary,
                     drawerInactiveTintColor: Colors.primary,
                     drawerInactiveBackgroundColor: Colors.onPrimary,
                     drawerLabelStyle: {
-                        fontSize: FontSize.large,
+                        fontSize: FontSize.medium,
                         paddingVertical: Spacing,
                         textAlign: 'center',
                         fontFamily: 'poppins-semibold'
@@ -132,14 +132,14 @@ const AdminStack = () => {
                     },
                     headerStyle: { backgroundColor: Colors.primary, },
                     headerTintColor: Colors.onPrimary,
-                    headerStatusBarHeight: Spacing * 5,
+                    headerStatusBarHeight: Spacing * 4,
                     title: 'Manage Investments',
                     drawerActiveTintColor: Colors.onPrimary,
                     drawerActiveBackgroundColor: Colors.primary,
                     drawerInactiveTintColor: Colors.primary,
                     drawerInactiveBackgroundColor: Colors.onPrimary,
                     drawerLabelStyle: {
-                        fontSize: FontSize.large,
+                        fontSize: FontSize.medium,
                         paddingVertical: Spacing,
                         textAlign: 'center',
                         fontFamily: 'poppins-semibold'
@@ -157,20 +157,20 @@ const AdminStack = () => {
                     },
                     headerStyle: { backgroundColor: Colors.primary, },
                     headerTintColor: Colors.onPrimary,
-                    headerStatusBarHeight: Spacing * 5,
+                    headerStatusBarHeight: Spacing * 4,
                     title: 'Set Goals',
                     drawerActiveTintColor: Colors.onPrimary,
                     drawerActiveBackgroundColor: Colors.primary,
                     drawerInactiveTintColor: Colors.primary,
                     drawerInactiveBackgroundColor: Colors.onPrimary,
                     drawerLabelStyle: {
-                        fontSize: FontSize.large,
+                        fontSize: FontSize.medium,
                         paddingVertical: Spacing,
                         textAlign: 'center',
                         fontFamily: 'poppins-semibold'
                     }
                 }}
-            /> */}
+            />
         </Drawer.Navigator>
     );
 };

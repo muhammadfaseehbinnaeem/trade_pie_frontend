@@ -1,12 +1,11 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
 import {
-    SafeAreaView,
     Text,
     View,
     TouchableOpacity,
     ScrollView,
-    Alert
+    Alert,
+    StyleSheet
 } from 'react-native';
 
 import Spacing from '../constants/Spacing';
@@ -14,6 +13,7 @@ import FontSize from '../constants/FontSize';
 import Colors from '../constants/Colors';
 import { useCustomFonts } from '../constants/Font';
 import { useHttpClient } from '../hooks/http-hook';
+import Footer from '../components/Footer';
 import AppTextInput from '../components/AppTextInput';
 import Loader from '../components/Loader';
 import ErrorAlert from '../components/ErrorAlert';
@@ -76,8 +76,6 @@ const PaymentAccountScreen = ({ navigation }) => {
             );
             
             if (responseData.success) {
-                // console.log(responseData.data);
-                
                 return (
                     Alert.alert(
                         'Payment Account',
@@ -123,8 +121,8 @@ const PaymentAccountScreen = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView>
-            <View style={{ padding: '5%' }}>
+        <View style={styles.container}>
+            <View style={styles.body}>
                 <ScrollView>
                     <View style={{ alignItems: 'center' }}>
                         <Text
@@ -181,10 +179,29 @@ const PaymentAccountScreen = ({ navigation }) => {
                             </Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={ styles.horizontalSpacer } />
                 </ScrollView>
             </View>
-        </SafeAreaView>
+            <Footer />
+        </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    body: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: Spacing * 3
+    },
+    horizontalSpacer: {
+        paddingHorizontal: Spacing * 2,
+        marginHorizontal: Spacing * 15
+    },
+});
 
 export default PaymentAccountScreen;

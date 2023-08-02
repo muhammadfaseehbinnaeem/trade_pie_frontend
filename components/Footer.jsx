@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Linking } from 'react-native';
 
 import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
@@ -14,35 +14,50 @@ const Footer = () => {
       return <Loader />;
   }
 
+  const openLink = (reference) => {
+    const link = reference === 'Gmail' ? 'mailto:www.tradepie@gmail.com' : 'whatsapp://send?phone=923304095376';
+
+    Linking.openURL(link)
+      .catch(() => { console.log(`Couldn't open ${reference}`) });
+  };
+
   return (
     <View style={styles.footer}>
-      <View
+      <TouchableOpacity
         style={{
           flexDirection: 'row',
           paddingTop: Spacing,
         }}
+        onPress={() => openLink('Gmail')}
       >
         <Image
-          style={{ height: 20 }}
+          style={{
+            width: Spacing * 4,
+            height: Spacing * 2
+          }}
           resizeMode='contain'
-          source={require('../assets/icons/email.png')}
+          source={require('../assets/icons/white_gmail.png')}
         />
         <Text style={ styles.text }>www.tradepie@gmail.com</Text>
-      </View>
-      <View
+      </TouchableOpacity>
+      <TouchableOpacity
         style={{
           flexDirection: 'row',
           paddingTop: Spacing / 2,
           paddingBottom: Spacing
         }}
+        onPress={() => openLink('WhatsApp')}
       >
         <Image
-          style={{ height: 20 }}
+          style={{
+            width: Spacing * 4,
+            height: Spacing * 2
+          }}
           resizeMode='contain'
-          source={require('../assets/icons/whatsapp.png')}
+          source={require('../assets/icons/white_whatsapp.png')}
         />
-        <Text style={ styles.text }>03304095376</Text>
-      </View>
+        <Text style={ styles.text }>+92-330-4095376</Text>
+      </TouchableOpacity>
     </View>
   );
 };

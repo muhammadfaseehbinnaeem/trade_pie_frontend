@@ -18,28 +18,28 @@ import { useHttpClient } from '../hooks/http-hook';
 import Loader from '../components/Loader';
 import ErrorAlert from '../components/ErrorAlert';
 
-const InvestmentsScreen = ({ navigation }) => {
+const MyTeamCommissionsScreen = ({ navigation }) => {
     const { error, sendRequest, clearError } = useHttpClient();
-    const [investments, setInvestments] = useState([]);
+    const [teamCommissions, setTeamCommissions] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState('All');
     const fontsLoaded = useCustomFonts();
 
-    const investmentsNotFoundAlertOkHandler = () => {
-        navigation.navigate('AdminDashboard');
+    const teamCommissionsNotFoundAlertOkHandler = () => {
+        status === 'All' ? navigation.navigate('UserDashboard') : navigation.navigate('UserTeamCommission');
         setStatus('All');
         setIsLoading(false);
     };
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            const getUserInvestments = async () => {
+            const getUserTeamCommissions = async () => {
                 setStatus('All');
                 setIsLoading(true);
 
                 try {
                     const response = await sendRequest(
-                        `/api/investments/allinvestments/${status}`,
+                        `/api/commissions/team/${status}`,
                         'GET',
                         null,
                         {'Content-Type': 'application/json'}
@@ -47,39 +47,35 @@ const InvestmentsScreen = ({ navigation }) => {
 
                     const responseData = JSON.parse(JSON.stringify(response));
                     
-                    if (responseData.success) {
-                        let investmentsData = responseData.data;
-                        if (investmentsData.length === 0) {
+                    if (responseData?.success) {
+                        let teamCommissionsData = responseData?.data;
+                        if (teamCommissionsData.length === 0) {
                             return (
                                 Alert.alert(
                                     'Message',
-                                    'No investments found in this category.',
+                                    `You don't have any team commissions in this category.`,
                                     [{
                                         text: 'OK',
-                                        onPress: () => investmentsNotFoundAlertOkHandler()
+                                        onPress: () => teamCommissionsNotFoundAlertOkHandler()
                                     }],
                                     {cancelable: false}
                                 )
                             );
                         }
 
-                        const investmentsArray = investmentsData.map((investment) => {
-                            if (!investment.isActive && investment.isApproved) {
-                                return { ...investment, status: 'Approved', color: 'green' };
+                        const teamCommissionsArray = teamCommissionsData.map((teamCommission) => {
+                            if (!teamCommission.isActive && teamCommission.isApproved) {
+                                return { ...teamCommission, status: 'Approved', color: 'green' };
                             }
                             
-                            if (!investment.isActive && !investment.isApproved) {
-                                return { ...investment, status: 'Rejected', color: 'red' };
-                            }
-                            
-                            if (investment.isActive && !investment.isApproved) {
-                                return { ...investment, status: 'Pending', color: 'orange' };
+                            if (teamCommission.isActive && !teamCommission.isApproved) {
+                                return { ...teamCommission, status: 'Pending', color: 'orange' };
                             }
 
-                            return investment;
+                            return teamCommission;
                         });
 
-                        setInvestments(investmentsArray);
+                        setTeamCommissions(teamCommissionsArray);
                     } else {
                         ErrorAlert(responseData?.error?.message);
                     }
@@ -89,16 +85,16 @@ const InvestmentsScreen = ({ navigation }) => {
 
                 setIsLoading(false);
             };
-            
-            getUserInvestments();
+
+            getUserTeamCommissions();
         });
 
-        const getFilteredInvestments = async (req, res) => {
+        const getFilteredTeamCommissions = async (req, res) => {
             setIsLoading(true);
 
             try {
                 const response = await sendRequest(
-                    `/api/investments/allinvestments/${status}`,
+                    `/api/commissions/team/${status}`,
                     'GET',
                     null,
                     {'Content-Type': 'application/json'}
@@ -106,39 +102,35 @@ const InvestmentsScreen = ({ navigation }) => {
 
                 const responseData = JSON.parse(JSON.stringify(response));
                 
-                if (responseData.success) {
-                    let investmentsData = responseData.data;
-                    if (investmentsData.length === 0) {
+                if (responseData?.success) {
+                    let teamCommissionsData = responseData?.data;
+                    if (teamCommissionsData.length === 0) {
                         return (
                             Alert.alert(
                                 'Message',
-                                'No investments found in this category.',
+                                `You don't have any team commissions in this category.`,
                                 [{
                                     text: 'OK',
-                                    onPress: () => investmentsNotFoundAlertOkHandler()
+                                    onPress: () => teamCommissionsNotFoundAlertOkHandler()
                                 }],
                                 {cancelable: false}
                             )
                         );
                     }
 
-                    const investmentsArray = investmentsData.map((investment) => {
-                        if (!investment.isActive && investment.isApproved) {
-                            return { ...investment, status: 'Approved', color: 'green' };
+                    const teamCommissionsArray = teamCommissionsData.map((teamCommission) => {
+                        if (!teamCommission.isActive && teamCommission.isApproved) {
+                            return { ...teamCommission, status: 'Approved', color: 'green' };
                         }
                         
-                        if (!investment.isActive && !investment.isApproved) {
-                            return { ...investment, status: 'Rejected', color: 'red' };
-                        }
-                        
-                        if (investment.isActive && !investment.isApproved) {
-                            return { ...investment, status: 'Pending', color: 'orange' };
+                        if (teamCommission.isActive && !teamCommission.isApproved) {
+                            return { ...teamCommission, status: 'Pending', color: 'orange' };
                         }
 
-                        return investment;
+                        return teamCommission;
                     });
 
-                    setInvestments(investmentsArray);
+                    setTeamCommissions(teamCommissionsArray);
                 } else {
                     ErrorAlert(responseData?.error?.message);
                 }
@@ -149,8 +141,8 @@ const InvestmentsScreen = ({ navigation }) => {
             setIsLoading(false);
         };
         
-        getFilteredInvestments();
-
+        getFilteredTeamCommissions();
+      
         return unsubscribe;
     }, [navigation, status]);
 
@@ -158,20 +150,20 @@ const InvestmentsScreen = ({ navigation }) => {
         return <Loader />;
     }
 
-    const investmentCardHandler = async (item) => {
-        const params = { investmentId: item._id };
-        
-        navigation.navigate('FocusedInvestment', params);
+    const teamCommissionCardHandler = async (item) => {
+        const params = { teamCommissionId: item._id };
+
+        navigation.navigate('FocusedTeamCommission', params);
     };
 
     const renderCard = ({ item }) => (
-        <TouchableOpacity onPress={() => investmentCardHandler(item)}>
+        <TouchableOpacity onPress={() => teamCommissionCardHandler(item)}>
             <View style={styles.card}>
                 <Text style={styles.text}>
                     ID: {item._id}
                 </Text>
                 <Text style={styles.text}>
-                    Amount: {Currency}{item.amount}
+                    From: {item.from}
                 </Text>
                 <Text style={styles.text}>
                     Status: {
@@ -181,7 +173,7 @@ const InvestmentsScreen = ({ navigation }) => {
                     }
                 </Text>
                 <Text style={styles.text}>
-                    Profit: {item.profit !== 0 ? `${Currency}${item.profit}` : '0'}
+                    Commission: {Currency}{item.commission}
                 </Text>
             </View>
         </TouchableOpacity>
@@ -201,11 +193,10 @@ const InvestmentsScreen = ({ navigation }) => {
             >
                 <Picker.Item label='All' value='All' />
                 <Picker.Item label='Approved' value='Approved' />
-                <Picker.Item label='Rejected' value='Rejected' />
                 <Picker.Item label='Pending' value='Pending' />
             </Picker>
             <FlatList
-                data={investments}
+                data={teamCommissions}
                 renderItem={renderCard}
                 keyExtractor={(item) => item._id}
                 ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -278,4 +269,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default InvestmentsScreen;
+export default MyTeamCommissionsScreen;

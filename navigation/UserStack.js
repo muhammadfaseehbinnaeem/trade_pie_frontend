@@ -14,6 +14,10 @@ import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import InvestMoneyScreen from '../screens/InvestMoneyScreen';
 import MyInvestmentsScreen from '../screens/MyInvestmentsScreen';
 import FocusedInvestmentScreen from '../screens/FocusedInvestmentScreen';
+import MyReferralCommissionsScreen from '../screens/MyReferralCommissionsScreen';
+import FocusedReferralCommissionScreen from '../screens/FocusedReferralCommissionScreen';
+import MyTeamCommissionsScreen from '../screens/MyTeamCommissionsScreen';
+import FocusedTeamCommissionScreen from '../screens/FocusedTeamCommissionScreen';
 
 const UserInvestmentStack = () => {
     const Stack = createNativeStackNavigator();
@@ -35,6 +39,46 @@ const UserInvestmentStack = () => {
     );
 };
 
+const UserReferralCommissionStack = () => {
+    const Stack = createNativeStackNavigator();
+
+    return (
+        <Stack.Navigator
+            initialRouteName='MyReferralCommissions'
+            screenOptions={{ headerShown: false }}
+        >
+            <Stack.Screen
+                name="MyReferralCommissions"
+                component={MyReferralCommissionsScreen}
+            />
+            <Stack.Screen
+                name="FocusedReferralCommission"
+                component={FocusedReferralCommissionScreen}
+            />
+        </Stack.Navigator>
+    )
+}
+
+const UserTeamCommissionStack = () => {
+    const Stack = createNativeStackNavigator();
+
+    return (
+        <Stack.Navigator
+            initialRouteName='MyTeamCommissions'
+            screenOptions={{ headerShown: false }}
+        >
+            <Stack.Screen
+                name="MyTeamCommissions"
+                component={MyTeamCommissionsScreen}
+            />
+            <Stack.Screen
+                name="FocusedTeamCommission"
+                component={FocusedTeamCommissionScreen}
+            />
+        </Stack.Navigator>
+    )
+}
+
 const UserStack = () => {
     const Drawer = createDrawerNavigator();
     const fontsLoaded = useCustomFonts();
@@ -44,7 +88,7 @@ const UserStack = () => {
     }
 
     return (
-        <Drawer.Navigator initialRouteName='Profile' drawerContent={LogoutButton}>
+        <Drawer.Navigator initialRouteName='UserDashboard' drawerContent={LogoutButton}>
             <Drawer.Screen
                 name='UserDashboard'
                 component={UserDashboardScreen}
@@ -63,7 +107,7 @@ const UserStack = () => {
                     drawerInactiveTintColor: Colors.primary,
                     drawerInactiveBackgroundColor: Colors.onPrimary,
                     drawerLabelStyle: {
-                        fontSize: FontSize.large,
+                        fontSize: FontSize.medium,
                         paddingVertical: Spacing,
                         textAlign: 'center',
                         fontFamily: 'poppins-semibold'
@@ -88,7 +132,7 @@ const UserStack = () => {
                     drawerInactiveTintColor: Colors.primary,
                     drawerInactiveBackgroundColor: Colors.onPrimary,
                     drawerLabelStyle: {
-                        fontSize: FontSize.large,
+                        fontSize: FontSize.medium,
                         paddingVertical: Spacing,
                         textAlign: 'center',
                         fontFamily: 'poppins-semibold'
@@ -113,7 +157,57 @@ const UserStack = () => {
                     drawerInactiveTintColor: Colors.primary,
                     drawerInactiveBackgroundColor: Colors.onPrimary,
                     drawerLabelStyle: {
-                        fontSize: FontSize.large,
+                        fontSize: FontSize.medium,
+                        paddingVertical: Spacing,
+                        textAlign: 'center',
+                        fontFamily: 'poppins-semibold'
+                    }
+                }}
+            />
+            <Drawer.Screen
+                name='UserReferralCommission'
+                component={UserReferralCommissionStack}
+                options={{
+                    headerTitle: 'My Referral Commissions',
+                    headerTitleStyle: {
+                        fontSize: 25,
+                        fontFamily: 'poppins-semibold',
+                    },
+                    headerStyle: { backgroundColor: Colors.primary, },
+                    headerTintColor: Colors.onPrimary,
+                    headerStatusBarHeight: Spacing * 4,
+                    title: 'My Referral Commissions',
+                    drawerActiveTintColor: Colors.onPrimary,
+                    drawerActiveBackgroundColor: Colors.primary,
+                    drawerInactiveTintColor: Colors.primary,
+                    drawerInactiveBackgroundColor: Colors.onPrimary,
+                    drawerLabelStyle: {
+                        fontSize: FontSize.medium,
+                        paddingVertical: Spacing,
+                        textAlign: 'center',
+                        fontFamily: 'poppins-semibold'
+                    }
+                }}
+            />
+            <Drawer.Screen
+                name='UserTeamCommission'
+                component={UserTeamCommissionStack}
+                options={{
+                    headerTitle: 'My Team Commissions',
+                    headerTitleStyle: {
+                        fontSize: 25,
+                        fontFamily: 'poppins-semibold',
+                    },
+                    headerStyle: { backgroundColor: Colors.primary, },
+                    headerTintColor: Colors.onPrimary,
+                    headerStatusBarHeight: Spacing * 4,
+                    title: 'My Team Commissions',
+                    drawerActiveTintColor: Colors.onPrimary,
+                    drawerActiveBackgroundColor: Colors.primary,
+                    drawerInactiveTintColor: Colors.primary,
+                    drawerInactiveBackgroundColor: Colors.onPrimary,
+                    drawerLabelStyle: {
+                        fontSize: FontSize.medium,
                         paddingVertical: Spacing,
                         textAlign: 'center',
                         fontFamily: 'poppins-semibold'
@@ -138,7 +232,7 @@ const UserStack = () => {
                     drawerInactiveTintColor: Colors.primary,
                     drawerInactiveBackgroundColor: Colors.onPrimary,
                     drawerLabelStyle: {
-                        fontSize: FontSize.large,
+                        fontSize: FontSize.medium,
                         paddingVertical: Spacing,
                         textAlign: 'center',
                         fontFamily: 'poppins-semibold'
@@ -163,7 +257,7 @@ const UserStack = () => {
                     drawerInactiveTintColor: Colors.primary,
                     drawerInactiveBackgroundColor: Colors.onPrimary,
                     drawerLabelStyle: {
-                        fontSize: FontSize.large,
+                        fontSize: FontSize.medium,
                         paddingVertical: Spacing,
                         textAlign: 'center',
                         fontFamily: 'poppins-semibold'

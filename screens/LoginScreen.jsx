@@ -87,7 +87,7 @@ const LoginScreen = ({ navigation }) => {
                                     alignSelf: 'flex-end'
                                 }}
                             >
-                                Forgot your password ?
+                                Forgot your password?
                             </Text>
                         </TouchableOpacity>
                     </View>

@@ -13,7 +13,6 @@ import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
 import Colors from '../constants/Colors';
 import { useCustomFonts } from '../constants/Font';
-import { AuthContext } from '../context/AuthContext';
 import { useHttpClient } from '../hooks/http-hook';
 import AppTextInput from '../components/AppTextInput';
 import Loader from '../components/Loader';

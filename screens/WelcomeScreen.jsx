@@ -1,12 +1,14 @@
 import React from 'react';
 import {
-    SafeAreaView,
     View,
     Text,
     ImageBackground,
     Dimensions,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
+    Linking,
+    Image,
+    StyleSheet
 } from 'react-native';
 
 import Spacing from '../constants/Spacing';
@@ -24,9 +26,16 @@ const WelcomeScreen = ({ navigation }) => {
         return <Loader />;
     }
 
+    const openLink = (reference) => {
+        const link = reference === 'Gmail' ? 'mailto:www.tradepie@gmail.com' : 'whatsapp://send?phone=923304095376';
+
+        Linking.openURL(link)
+            .catch(() => { console.log(`Couldn't open ${reference}`) });
+    };      
+
     return (
-        <SafeAreaView>
-            <View>
+        <View style={styles.container} >
+            <View style={styles.body}>
                 <ScrollView>
                     <View
                         style={{
@@ -119,8 +128,69 @@ const WelcomeScreen = ({ navigation }) => {
                     </View>
                 </ScrollView>
             </View>
-        </SafeAreaView>
+            <View style={styles.footer}>
+                <TouchableOpacity
+                        style={{
+                        flexDirection: 'row',
+                        paddingTop: Spacing,
+                    }}
+                    onPress={() => openLink('Gmail')}
+                >
+                    <Image
+                        style={{
+                            width: Spacing * 4,
+                            height: Spacing * 2
+                        }}
+                        resizeMode='contain'
+                        source={require('../assets/icons/gmail.png')}
+                    />
+                    <Text style={ styles.text }>www.tradepie@gmail.com</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={{
+                        flexDirection: 'row',
+                        paddingTop: Spacing / 2,
+                        paddingBottom: Spacing
+                    }}
+                    onPress={() => openLink('WhatsApp')}
+                >
+                    <Image
+                        style={{
+                            width: Spacing * 3.5,
+                            height: Spacing * 2.3
+                        }}
+                        resizeMode='contain'
+                        source={require('../assets/icons/whatsapp.png')}
+                    />
+                    <Text style={ styles.text }>+92-330-4095376</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center'
+    },
+    body: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: Spacing * 3,
+    },
+    footer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: Spacing * 8,
+        marginBottom: Spacing / 2
+    },
+    text: {
+        fontFamily: 'poppins-regular',
+        fontSize: FontSize.medium,
+        color: Colors.text
+}
+});
 
 export default WelcomeScreen;

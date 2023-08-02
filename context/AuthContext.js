@@ -26,9 +26,9 @@ export const AuthProvider = ({ children }) => {
                     {'Content-Type': 'application/json'}
                 );
                 
-                if (responseData.success) {
-                    let userInfo = responseData.data;
-                    let userToken = responseData.token;
+                if (responseData?.success) {
+                    let userInfo = responseData?.data;
+                    let userToken = responseData?.token;
                     
                     setUserInfo(userInfo);
                     setUserToken(userToken);
