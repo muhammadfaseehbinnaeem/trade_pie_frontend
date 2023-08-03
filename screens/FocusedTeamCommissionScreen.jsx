@@ -29,7 +29,6 @@ const FocusedTeamCommissionScreen = ({ navigation }) => {
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             const getTeamCommissionById = async () => {
-                console.log(userInfo);
                 setIsLoading(true);
                     
                 try {

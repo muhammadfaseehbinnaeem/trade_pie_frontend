@@ -17,7 +17,6 @@ import { useHttpClient, baseUrl } from '../hooks/http-hook';
 import Footer from '../components/Footer';
 import Loader from '../components/Loader';
 import ErrorAlert from '../components/ErrorAlert';
-import AppTextInput from "../components/AppTextInput";
 
 const FocusedReferralCommissionScreen = ({ navigation }) => {
     const { userInfo } = useContext(AuthContext);
@@ -30,7 +29,6 @@ const FocusedReferralCommissionScreen = ({ navigation }) => {
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
             const getReferralCommissionById = async () => {
-                console.log(userInfo);
                 setIsLoading(true);
                     
                 try {

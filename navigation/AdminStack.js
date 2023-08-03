@@ -15,6 +15,10 @@ import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import InvestmentsScreen from '../screens/InvestmentsScreen';
 import FocusedInvestmentScreen from '../screens/FocusedInvestmentScreen';
 import SetGoalScreen from '../screens/SetGoalsScreen';
+import ReferralCommissionsScreen from '../screens/ReferralCommissionsScreen';
+import FocusedReferralCommissionScreen from '../screens/FocusedReferralCommissionScreen';
+import TeamCommissionsScreen from '../screens/TeamCommissionsScreen';
+import FocusedTeamCommissionScreen from '../screens/FocusedTeamCommissionScreen';
 
 const UserInvestmentsStack = () => {
     const Stack = createNativeStackNavigator();
@@ -34,6 +38,46 @@ const UserInvestmentsStack = () => {
             />
         </Stack.Navigator>
     );
+};
+
+const UserReferralCommissionsStack = () => {
+    const Stack = createNativeStackNavigator();
+
+    return (
+        <Stack.Navigator
+            initialRouteName='ReferralCommissions'
+            screenOptions={{ headerShown: false }}
+        >
+            <Stack.Screen
+                name="ReferralCommissions"
+                component={ReferralCommissionsScreen}
+            />
+            <Stack.Screen
+                name="FocusedReferralCommission"
+                component={FocusedReferralCommissionScreen}
+            />
+        </Stack.Navigator>
+    )
+};
+
+const UserTeamCommissionsStack = () => {
+    const Stack = createNativeStackNavigator();
+
+    return (
+        <Stack.Navigator
+            initialRouteName='TeamCommissions'
+            screenOptions={{ headerShown: false }}
+        >
+            <Stack.Screen
+                name="TeamCommissions"
+                component={TeamCommissionsScreen}
+            />
+            <Stack.Screen
+                name="FocusedTeamCommission"
+                component={FocusedTeamCommissionScreen}
+            />
+        </Stack.Navigator>
+    )
 };
 
 const AdminStack = () => {
@@ -122,10 +166,10 @@ const AdminStack = () => {
                 }}
             />
             <Drawer.Screen
-                name='UserInvestments'
-                component={UserInvestmentsStack}
+                name='UserReferralCommissions'
+                component={UserReferralCommissionsStack}
                 options={{
-                    headerTitle: 'Manage Investments',
+                    headerTitle: 'Referral Commissions',
                     headerTitleStyle: {
                         fontSize: 25,
                         fontFamily: 'poppins-semibold'
@@ -133,7 +177,57 @@ const AdminStack = () => {
                     headerStyle: { backgroundColor: Colors.primary, },
                     headerTintColor: Colors.onPrimary,
                     headerStatusBarHeight: Spacing * 4,
-                    title: 'Manage Investments',
+                    title: 'Referral Commissions',
+                    drawerActiveTintColor: Colors.onPrimary,
+                    drawerActiveBackgroundColor: Colors.primary,
+                    drawerInactiveTintColor: Colors.primary,
+                    drawerInactiveBackgroundColor: Colors.onPrimary,
+                    drawerLabelStyle: {
+                        fontSize: FontSize.medium,
+                        paddingVertical: Spacing,
+                        textAlign: 'center',
+                        fontFamily: 'poppins-semibold'
+                    }
+                }}
+            />
+            <Drawer.Screen
+                name='UserTeamCommissions'
+                component={UserTeamCommissionsStack}
+                options={{
+                    headerTitle: 'Team Commissions',
+                    headerTitleStyle: {
+                        fontSize: 25,
+                        fontFamily: 'poppins-semibold'
+                    },
+                    headerStyle: { backgroundColor: Colors.primary, },
+                    headerTintColor: Colors.onPrimary,
+                    headerStatusBarHeight: Spacing * 4,
+                    title: 'Team Commissions',
+                    drawerActiveTintColor: Colors.onPrimary,
+                    drawerActiveBackgroundColor: Colors.primary,
+                    drawerInactiveTintColor: Colors.primary,
+                    drawerInactiveBackgroundColor: Colors.onPrimary,
+                    drawerLabelStyle: {
+                        fontSize: FontSize.medium,
+                        paddingVertical: Spacing,
+                        textAlign: 'center',
+                        fontFamily: 'poppins-semibold'
+                    }
+                }}
+            />
+            <Drawer.Screen
+                name='UserInvestments'
+                component={UserInvestmentsStack}
+                options={{
+                    headerTitle: 'Investments',
+                    headerTitleStyle: {
+                        fontSize: 25,
+                        fontFamily: 'poppins-semibold'
+                    },
+                    headerStyle: { backgroundColor: Colors.primary, },
+                    headerTintColor: Colors.onPrimary,
+                    headerStatusBarHeight: Spacing * 4,
+                    title: 'Investments',
                     drawerActiveTintColor: Colors.onPrimary,
                     drawerActiveBackgroundColor: Colors.primary,
                     drawerInactiveTintColor: Colors.primary,

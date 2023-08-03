@@ -57,7 +57,7 @@ const UserReferralCommissionStack = () => {
             />
         </Stack.Navigator>
     )
-}
+};
 
 const UserTeamCommissionStack = () => {
     const Stack = createNativeStackNavigator();
@@ -77,7 +77,7 @@ const UserTeamCommissionStack = () => {
             />
         </Stack.Navigator>
     )
-}
+};
 
 const UserStack = () => {
     const Drawer = createDrawerNavigator();
