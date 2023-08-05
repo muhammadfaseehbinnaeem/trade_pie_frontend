@@ -27,7 +27,15 @@ const WelcomeScreen = ({ navigation }) => {
     }
 
     const openLink = (reference) => {
-        const link = reference === 'Gmail' ? 'mailto:www.tradepie@gmail.com' : 'whatsapp://send?phone=923304095376';
+        let link;
+
+        if (reference === 'Link') {
+            link = 'https://chat.whatsapp.com/DMgVW3BGvxeFJPqWCksA6M';    
+        } else if ( reference === 'Gmail') {
+            link = 'mailto:www.tradepie@gmail.com';
+        } else {
+            link = 'whatsapp://send?phone=923487178935';
+        }
 
         Linking.openURL(link)
             .catch(() => { console.log(`Couldn't open ${reference}`) });
@@ -37,12 +45,7 @@ const WelcomeScreen = ({ navigation }) => {
         <View style={styles.container} >
             <View style={styles.body}>
                 <ScrollView>
-                    <View
-                        style={{
-                            paddingTop: '5%',
-                            marginTop: '20%'
-                        }}
-                    >
+                    <View style={{ marginTop: Spacing * 7 }}>
                         <ImageBackground
                             style={{ height: height / 4.5 }}
                             resizeMode='contain'
@@ -130,16 +133,30 @@ const WelcomeScreen = ({ navigation }) => {
             </View>
             <View style={styles.footer}>
                 <TouchableOpacity
-                        style={{
+                    style={{
                         flexDirection: 'row',
-                        paddingTop: Spacing,
+                        paddingTop: Spacing / 2
                     }}
+                    onPress={() => openLink('Link')}
+                >
+                    <Image
+                        style={{
+                            width: Spacing * 3,
+                            height: Spacing * 2
+                        }}
+                        resizeMode='contain'
+                        source={require('../assets/icons/link.png')}
+                    />
+                    <Text style={ styles.text }>Join the Family</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={{ flexDirection: 'row' }}
                     onPress={() => openLink('Gmail')}
                 >
                     <Image
                         style={{
-                            width: Spacing * 4,
-                            height: Spacing * 2
+                            width: Spacing * 3,
+                            height: Spacing * 1.8
                         }}
                         resizeMode='contain'
                         source={require('../assets/icons/gmail.png')}
@@ -149,20 +166,19 @@ const WelcomeScreen = ({ navigation }) => {
                 <TouchableOpacity
                     style={{
                         flexDirection: 'row',
-                        paddingTop: Spacing / 2,
-                        paddingBottom: Spacing
+                        paddingBottom: Spacing / 2
                     }}
                     onPress={() => openLink('WhatsApp')}
                 >
                     <Image
                         style={{
-                            width: Spacing * 3.5,
-                            height: Spacing * 2.3
+                            width: Spacing * 3,
+                            height: Spacing * 2
                         }}
                         resizeMode='contain'
                         source={require('../assets/icons/whatsapp.png')}
                     />
-                    <Text style={ styles.text }>+92-330-4095376</Text>
+                    <Text style={ styles.text }>+92-348-7178935</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -188,7 +204,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontFamily: 'poppins-regular',
-        fontSize: FontSize.medium,
+        fontSize: FontSize.small,
         color: Colors.text
 }
 });

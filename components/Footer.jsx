@@ -15,7 +15,15 @@ const Footer = () => {
   }
 
   const openLink = (reference) => {
-    const link = reference === 'Gmail' ? 'mailto:www.tradepie@gmail.com' : 'whatsapp://send?phone=923304095376';
+    let link;
+
+    if (reference === 'Link') {
+      link = 'https://chat.whatsapp.com/DMgVW3BGvxeFJPqWCksA6M';    
+    } else if ( reference === 'Gmail') {
+      link = 'mailto:www.tradepie@gmail.com';
+    } else {
+      link = 'whatsapp://send?phone=923487178935';
+    }
 
     Linking.openURL(link)
       .catch(() => { console.log(`Couldn't open ${reference}`) });
@@ -26,14 +34,28 @@ const Footer = () => {
       <TouchableOpacity
         style={{
           flexDirection: 'row',
-          paddingTop: Spacing,
+          paddingTop: Spacing / 2
         }}
+        onPress={() => openLink('Link')}
+      >
+        <Image
+          style={{
+            width: Spacing * 3,
+            height: Spacing * 2
+          }}
+          resizeMode='contain'
+          source={require('../assets/icons/white_link.png')}
+        />
+        <Text style={ styles.text }>Join the Family</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{ flexDirection: 'row' }}
         onPress={() => openLink('Gmail')}
       >
         <Image
           style={{
-            width: Spacing * 4,
-            height: Spacing * 2
+            width: Spacing * 3,
+            height: Spacing * 1.8
           }}
           resizeMode='contain'
           source={require('../assets/icons/white_gmail.png')}
@@ -43,20 +65,19 @@ const Footer = () => {
       <TouchableOpacity
         style={{
           flexDirection: 'row',
-          paddingTop: Spacing / 2,
-          paddingBottom: Spacing
+          paddingBottom: Spacing / 2
         }}
         onPress={() => openLink('WhatsApp')}
       >
         <Image
           style={{
-            width: Spacing * 4,
-            height: Spacing * 2
+            width: Spacing * 3,
+            height: Spacing * 1.5
           }}
           resizeMode='contain'
           source={require('../assets/icons/white_whatsapp.png')}
         />
-        <Text style={ styles.text }>+92-330-4095376</Text>
+        <Text style={ styles.text }>+92-348-7178935</Text>
       </TouchableOpacity>
     </View>
   );
@@ -71,7 +92,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontFamily: 'poppins-regular',
-    fontSize: FontSize.medium,
+    fontSize: FontSize.small,
     color: Colors.onPrimary
   }
 });
