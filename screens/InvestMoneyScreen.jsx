@@ -240,7 +240,7 @@ const InvestMoneyScreen = ({ navigation }) => {
                             </Text>
                         <Text style={styles.separator}></Text>
                         <AppTextInput
-                            placeholder='Enter Amount in Rs.'
+                            placeholder={`Enter amount in ${Currency}`}
                             keyboardType='numeric'
                             onChangeText={(text) => setAmount(text)}
                         />

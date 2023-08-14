@@ -82,7 +82,6 @@ const RegisterScreen = ({ navigation }) => {
     };
 
     const registerHandler = async () => {
-        console.log(requestData);
         if (
             requestData.name === '' ||
             requestData.email === '' ||

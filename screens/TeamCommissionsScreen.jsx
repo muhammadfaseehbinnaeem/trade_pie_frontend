@@ -26,7 +26,7 @@ const TeamCommissionsScreen = ({ navigation }) => {
     const fontsLoaded = useCustomFonts();
 
     const teamCommissionsNotFoundAlertOkHandler = () => {
-        status === 'All' ? navigation.navigate('UserDashboard') : navigation.navigate('UserTeamCommissions');
+        status === 'All' ? navigation.navigate('AdminDashboard') : navigation.navigate('UserTeamCommissions');
         setStatus('All');
         setIsLoading(false);
     };

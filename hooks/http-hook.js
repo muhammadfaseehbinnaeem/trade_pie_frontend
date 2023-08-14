@@ -1,14 +1,14 @@
 import { useState } from "react";
 
-export const baseUrl = 'http://164.92.70.154';
+// export const baseUrl = 'http://164.92.70.154';
+export const baseUrl = 'http://192.168.100.4:80';
 
 export const useHttpClient = () => {
     // const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     
     const sendRequest = async (requestUrl, method = 'GET', body = null, headers = {}) => {
-        const serverUrl = 'http://164.92.70.154';
-        const url = serverUrl + requestUrl;
+        const url = baseUrl + requestUrl;
         // setIsLoading(true);
 
         try {

@@ -41,7 +41,6 @@ const UserDashboardScreen = ({ navigation }) => {
                     
                     if (responseData.success) {
                         setUserInfo(responseData.data);
-
                     } else {
                         ErrorAlert(responseData?.error?.message);
                     }
@@ -83,10 +82,41 @@ const UserDashboardScreen = ({ navigation }) => {
                                 fontSize: FontSize.xLarge,
                                 color: Colors.primary,
                                 fontFamily: 'poppins-semibold',
-                                marginVertical: Spacing
+                                marginTop: Spacing,
+                                marginBottom: Spacing * 2
                             }}
                         >
-                            {userInfo?.name}
+                            Hi {userInfo?.name},
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            backgroundColor: Colors.onPrimary,
+                            paddingVertical: Spacing,
+                            marginVertical: Spacing / 2,
+                            borderRadius: Spacing
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingLeft: Spacing * 2
+                            }}
+                        >
+                            Wallet:
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingRight: Spacing * 2
+                            }}
+                        >
+                            {Currency}{userInfo?.wallet}
                         </Text>
                     </View>
                     <View
@@ -197,6 +227,36 @@ const UserDashboardScreen = ({ navigation }) => {
                                 paddingLeft: Spacing * 2
                             }}
                         >
+                            Profit:
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingRight: Spacing * 2
+                            }}
+                        >
+                            {Currency}{userInfo?.profit}
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            backgroundColor: Colors.onPrimary,
+                            paddingVertical: Spacing,
+                            marginVertical: Spacing / 2,
+                            borderRadius: Spacing
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingLeft: Spacing * 2
+                            }}
+                        >
                             Earning:
                         </Text>
                         <Text
@@ -227,7 +287,7 @@ const UserDashboardScreen = ({ navigation }) => {
                                 paddingLeft: Spacing * 2
                             }}
                         >
-                            Profit:
+                            Withdrawal:
                         </Text>
                         <Text
                             style={{
@@ -236,7 +296,7 @@ const UserDashboardScreen = ({ navigation }) => {
                                 paddingRight: Spacing * 2
                             }}
                         >
-                            {Currency}{userInfo?.profit}
+                            {Currency}{userInfo?.withdrawal}
                         </Text>
                     </View>
                     <View style={{ marginTop: Spacing * 4 }}>

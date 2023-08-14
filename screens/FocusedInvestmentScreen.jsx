@@ -129,7 +129,6 @@ const FocusedInvestmentScreen = ({ navigation }) => {
     };
 
     const rejectAlertYesHandler = async() => {
-        investmentData.profit = 0;
         investmentData.isActive = false;
         investmentData.isApproved = false;
         investmentData.status = 'Rejected';
@@ -210,7 +209,7 @@ const FocusedInvestmentScreen = ({ navigation }) => {
                         <Text>Name: {investmentData.userName}</Text>
                         <Text>Account Number: {investmentData.userAccountNumber}</Text>
                         <Text>Account Type: {investmentData.userAccountType}</Text>
-                        <Text>Amount: Rs. {investmentData.amount}</Text>
+                        <Text>Amount: {Currency}{investmentData.amount}</Text>
                         <Text>
                             Status: {
                                 <Text style={[styles.status, { color: investmentData.color }]}>
@@ -218,27 +217,18 @@ const FocusedInvestmentScreen = ({ navigation }) => {
                                 </Text>
                             }
                         </Text>
+                        <Text>Profit: {Currency}{investmentData.profit}</Text>
                         {
                             (
-                                investmentData.status === 'Approved' ||
-                                investmentData.status === 'Rejected' ||
-                                !userInfo.isAdmin
+                                userInfo.isAdmin &&
+                                investmentData.status !== 'Approved' &&
+                                investmentData.status !== 'Rejected'
                             ) ?
-                            ( <Text>Profit: {Currency}{investmentData.profit}</Text> ) :
                             (
-                                <>
-                                    <AppTextInput
-                                        style={styles.input}
-                                        placeholder={`Enter profit in ${Currency}`}
-                                        keyboardType='numeric'
-                                        onChangeText={(text) => setInvestmentData({ ...investmentData, profit: text })}
-                                    />
-                        
-                                    <View style={styles.buttonsContainer}>
+                                <View style={styles.buttonsContainer}>
                                     <TouchableOpacity
                                         style={[styles.button, { backgroundColor: 'green' }]}
                                         onPress={() => approveHandler()}
-                                        disabled={!investmentData.profit || investmentData.profit == 0}
                                     >
                                         <Text style={styles.buttonText}>Approve</Text>
                                     </TouchableOpacity>
@@ -248,9 +238,8 @@ const FocusedInvestmentScreen = ({ navigation }) => {
                                     >
                                         <Text style={styles.buttonText}>Reject</Text>
                                     </TouchableOpacity>
-                                    </View>
-                                </>
-                            )
+                                </View>
+                            ) : ''
                         }
                     </View>
                     <View style={ styles.horizontalSpacer } />
@@ -313,6 +302,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 10,
         marginHorizontal: 5,
+        marginTop: Spacing * 2,
         borderRadius: 8,
     },
     buttonText: {

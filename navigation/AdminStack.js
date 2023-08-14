@@ -19,6 +19,7 @@ import ReferralCommissionsScreen from '../screens/ReferralCommissionsScreen';
 import FocusedReferralCommissionScreen from '../screens/FocusedReferralCommissionScreen';
 import TeamCommissionsScreen from '../screens/TeamCommissionsScreen';
 import FocusedTeamCommissionScreen from '../screens/FocusedTeamCommissionScreen';
+import SetMarginsScreen from '../screens/SetMarginsScreen';
 
 const UserInvestmentsStack = () => {
     const Stack = createNativeStackNavigator();
@@ -109,7 +110,6 @@ const AdminStack = () => {
                     drawerInactiveBackgroundColor: Colors.onPrimary,
                     drawerLabelStyle: {
                         fontSize: FontSize.medium,
-                        paddingVertical: Spacing,
                         textAlign: 'center',
                         fontFamily: 'poppins-semibold'
                     }
@@ -134,7 +134,6 @@ const AdminStack = () => {
                     drawerInactiveBackgroundColor: Colors.onPrimary,
                     drawerLabelStyle: {
                         fontSize: FontSize.medium,
-                        paddingVertical: Spacing,
                         textAlign: 'center',
                         fontFamily: 'poppins-semibold'
                     }
@@ -159,82 +158,6 @@ const AdminStack = () => {
                     drawerInactiveBackgroundColor: Colors.onPrimary,
                     drawerLabelStyle: {
                         fontSize: FontSize.medium,
-                        paddingVertical: Spacing,
-                        textAlign: 'center',
-                        fontFamily: 'poppins-semibold'
-                    }
-                }}
-            />
-            <Drawer.Screen
-                name='UserReferralCommissions'
-                component={UserReferralCommissionsStack}
-                options={{
-                    headerTitle: 'Referral Commissions',
-                    headerTitleStyle: {
-                        fontSize: 25,
-                        fontFamily: 'poppins-semibold'
-                    },
-                    headerStyle: { backgroundColor: Colors.primary, },
-                    headerTintColor: Colors.onPrimary,
-                    headerStatusBarHeight: Spacing * 4,
-                    title: 'Referral Commissions',
-                    drawerActiveTintColor: Colors.onPrimary,
-                    drawerActiveBackgroundColor: Colors.primary,
-                    drawerInactiveTintColor: Colors.primary,
-                    drawerInactiveBackgroundColor: Colors.onPrimary,
-                    drawerLabelStyle: {
-                        fontSize: FontSize.medium,
-                        paddingVertical: Spacing,
-                        textAlign: 'center',
-                        fontFamily: 'poppins-semibold'
-                    }
-                }}
-            />
-            <Drawer.Screen
-                name='UserTeamCommissions'
-                component={UserTeamCommissionsStack}
-                options={{
-                    headerTitle: 'Team Commissions',
-                    headerTitleStyle: {
-                        fontSize: 25,
-                        fontFamily: 'poppins-semibold'
-                    },
-                    headerStyle: { backgroundColor: Colors.primary, },
-                    headerTintColor: Colors.onPrimary,
-                    headerStatusBarHeight: Spacing * 4,
-                    title: 'Team Commissions',
-                    drawerActiveTintColor: Colors.onPrimary,
-                    drawerActiveBackgroundColor: Colors.primary,
-                    drawerInactiveTintColor: Colors.primary,
-                    drawerInactiveBackgroundColor: Colors.onPrimary,
-                    drawerLabelStyle: {
-                        fontSize: FontSize.medium,
-                        paddingVertical: Spacing,
-                        textAlign: 'center',
-                        fontFamily: 'poppins-semibold'
-                    }
-                }}
-            />
-            <Drawer.Screen
-                name='UserInvestments'
-                component={UserInvestmentsStack}
-                options={{
-                    headerTitle: 'Investments',
-                    headerTitleStyle: {
-                        fontSize: 25,
-                        fontFamily: 'poppins-semibold'
-                    },
-                    headerStyle: { backgroundColor: Colors.primary, },
-                    headerTintColor: Colors.onPrimary,
-                    headerStatusBarHeight: Spacing * 4,
-                    title: 'Investments',
-                    drawerActiveTintColor: Colors.onPrimary,
-                    drawerActiveBackgroundColor: Colors.primary,
-                    drawerInactiveTintColor: Colors.primary,
-                    drawerInactiveBackgroundColor: Colors.onPrimary,
-                    drawerLabelStyle: {
-                        fontSize: FontSize.medium,
-                        paddingVertical: Spacing,
                         textAlign: 'center',
                         fontFamily: 'poppins-semibold'
                     }
@@ -259,7 +182,102 @@ const AdminStack = () => {
                     drawerInactiveBackgroundColor: Colors.onPrimary,
                     drawerLabelStyle: {
                         fontSize: FontSize.medium,
-                        paddingVertical: Spacing,
+                        textAlign: 'center',
+                        fontFamily: 'poppins-semibold'
+                    }
+                }}
+            />
+            <Drawer.Screen
+                name='SetMatgins'
+                component={SetMarginsScreen}
+                options={{
+                    headerTitle: 'Set Margins',
+                    headerTitleStyle: {
+                        fontSize: 25,
+                        fontFamily: 'poppins-semibold'
+                    },
+                    headerStyle: { backgroundColor: Colors.primary, },
+                    headerTintColor: Colors.onPrimary,
+                    headerStatusBarHeight: Spacing * 4,
+                    title: 'Set Margins',
+                    drawerActiveTintColor: Colors.onPrimary,
+                    drawerActiveBackgroundColor: Colors.primary,
+                    drawerInactiveTintColor: Colors.primary,
+                    drawerInactiveBackgroundColor: Colors.onPrimary,
+                    drawerLabelStyle: {
+                        fontSize: FontSize.medium,
+                        textAlign: 'center',
+                        fontFamily: 'poppins-semibold'
+                    }
+                }}
+            />
+            <Drawer.Screen
+                name='UserReferralCommissions'
+                component={UserReferralCommissionsStack}
+                options={{
+                    headerTitle: 'Referral Commissions',
+                    headerTitleStyle: {
+                        fontSize: 25,
+                        fontFamily: 'poppins-semibold'
+                    },
+                    headerStyle: { backgroundColor: Colors.primary, },
+                    headerTintColor: Colors.onPrimary,
+                    headerStatusBarHeight: Spacing * 4,
+                    title: 'Referral Commissions',
+                    drawerActiveTintColor: Colors.onPrimary,
+                    drawerActiveBackgroundColor: Colors.primary,
+                    drawerInactiveTintColor: Colors.primary,
+                    drawerInactiveBackgroundColor: Colors.onPrimary,
+                    drawerLabelStyle: {
+                        fontSize: FontSize.medium,
+                        textAlign: 'center',
+                        fontFamily: 'poppins-semibold'
+                    }
+                }}
+            />
+            <Drawer.Screen
+                name='UserTeamCommissions'
+                component={UserTeamCommissionsStack}
+                options={{
+                    headerTitle: 'Team Commissions',
+                    headerTitleStyle: {
+                        fontSize: 25,
+                        fontFamily: 'poppins-semibold'
+                    },
+                    headerStyle: { backgroundColor: Colors.primary, },
+                    headerTintColor: Colors.onPrimary,
+                    headerStatusBarHeight: Spacing * 4,
+                    title: 'Team Commissions',
+                    drawerActiveTintColor: Colors.onPrimary,
+                    drawerActiveBackgroundColor: Colors.primary,
+                    drawerInactiveTintColor: Colors.primary,
+                    drawerInactiveBackgroundColor: Colors.onPrimary,
+                    drawerLabelStyle: {
+                        fontSize: FontSize.medium,
+                        textAlign: 'center',
+                        fontFamily: 'poppins-semibold'
+                    }
+                }}
+            />
+            <Drawer.Screen
+                name='UserInvestments'
+                component={UserInvestmentsStack}
+                options={{
+                    headerTitle: 'Investments',
+                    headerTitleStyle: {
+                        fontSize: 25,
+                        fontFamily: 'poppins-semibold'
+                    },
+                    headerStyle: { backgroundColor: Colors.primary, },
+                    headerTintColor: Colors.onPrimary,
+                    headerStatusBarHeight: Spacing * 4,
+                    title: 'Investments',
+                    drawerActiveTintColor: Colors.onPrimary,
+                    drawerActiveBackgroundColor: Colors.primary,
+                    drawerInactiveTintColor: Colors.primary,
+                    drawerInactiveBackgroundColor: Colors.onPrimary,
+                    drawerLabelStyle: {
+                        fontSize: FontSize.medium,
                         textAlign: 'center',
                         fontFamily: 'poppins-semibold'
                     }
