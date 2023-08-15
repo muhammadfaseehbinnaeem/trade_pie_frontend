@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
 import {
     Text,
@@ -242,7 +241,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: Spacing * 3,
+        marginVertical: Spacing * 3,
     },
     horizontalSpacer: {
         paddingHorizontal: Spacing * 2,

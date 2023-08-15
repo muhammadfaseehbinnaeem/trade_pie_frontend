@@ -369,7 +369,7 @@ const AdminDashboardScreen = ({ navigation }) => {
                                 paddingRight: Spacing * 2
                             }}
                         >
-                            {dashboardData?.approvedInvestmentsCount}
+                            {dashboardData?.approvedWithdrawalsCount}
                         </Text>
                     </View>
                     <View
@@ -399,7 +399,7 @@ const AdminDashboardScreen = ({ navigation }) => {
                                 paddingRight: Spacing * 2
                             }}
                         >
-                            {dashboardData?.rejectedInvestmentsCount}
+                            {dashboardData?.rejectedWithdrawalsCount}
                         </Text>
                     </View>
                     <View
@@ -430,7 +430,7 @@ const AdminDashboardScreen = ({ navigation }) => {
                                 paddingRight: Spacing * 2
                             }}
                         >
-                            {dashboardData?.pendingInvestmentsCount}
+                            {dashboardData?.pendingWithdrawalsCount}
                         </Text>
                     </View>
                     <View style={ styles.horizontalSpacer } />

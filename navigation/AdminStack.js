@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
@@ -12,34 +11,16 @@ import Loader from '../components/Loader';
 import AdminDashboardScreen from '../screens/AdminDashboardScreen';
 import PaymentAccountScreen from '../screens/PaymentAccountScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
-import InvestmentsScreen from '../screens/InvestmentsScreen';
-import FocusedInvestmentScreen from '../screens/FocusedInvestmentScreen';
-import SetGoalScreen from '../screens/SetGoalsScreen';
+import SetGoalsScreen from '../screens/SetGoalsScreen';
 import ReferralCommissionsScreen from '../screens/ReferralCommissionsScreen';
 import FocusedReferralCommissionScreen from '../screens/FocusedReferralCommissionScreen';
 import TeamCommissionsScreen from '../screens/TeamCommissionsScreen';
 import FocusedTeamCommissionScreen from '../screens/FocusedTeamCommissionScreen';
+import InvestmentsScreen from '../screens/InvestmentsScreen';
+import FocusedInvestmentScreen from '../screens/FocusedInvestmentScreen';
+import WithdrawalsScreen from '../screens/WithdrawalsScreen';
+import FocusedWithdrawalScreen from '../screens/FocusedWithdrawalScreen';
 import SetMarginsScreen from '../screens/SetMarginsScreen';
-
-const UserInvestmentsStack = () => {
-    const Stack = createNativeStackNavigator();
-
-    return (
-        <Stack.Navigator
-            initialRouteName='Investments'
-            screenOptions={{ headerShown: false }}
-        >
-            <Stack.Screen
-                name='Investments'
-                component={InvestmentsScreen}
-            />
-            <Stack.Screen
-                name='FocusedInvestment'
-                component={FocusedInvestmentScreen}
-            />
-        </Stack.Navigator>
-    );
-};
 
 const UserReferralCommissionsStack = () => {
     const Stack = createNativeStackNavigator();
@@ -79,6 +60,46 @@ const UserTeamCommissionsStack = () => {
             />
         </Stack.Navigator>
     )
+};
+
+const UserInvestmentsStack = () => {
+    const Stack = createNativeStackNavigator();
+
+    return (
+        <Stack.Navigator
+            initialRouteName='Investments'
+            screenOptions={{ headerShown: false }}
+        >
+            <Stack.Screen
+                name='Investments'
+                component={InvestmentsScreen}
+            />
+            <Stack.Screen
+                name='FocusedInvestment'
+                component={FocusedInvestmentScreen}
+            />
+        </Stack.Navigator>
+    );
+};
+
+const UserWithdrawalsStack = () => {
+    const Stack = createNativeStackNavigator();
+
+    return (
+        <Stack.Navigator
+            initialRouteName='Withdrawals'
+            screenOptions={{ headerShown: false }}
+        >
+            <Stack.Screen
+                name='Withdrawals'
+                component={WithdrawalsScreen}
+            />
+            <Stack.Screen
+                name='FocusedWithdrawal'
+                component={FocusedWithdrawalScreen}
+            />
+        </Stack.Navigator>
+    );
 };
 
 const AdminStack = () => {
@@ -165,7 +186,7 @@ const AdminStack = () => {
             />
             <Drawer.Screen
                 name='SetGoals'
-                component={SetGoalScreen}
+                component={SetGoalsScreen}
                 options={{
                     headerTitle: 'Set Goals',
                     headerTitleStyle: {
@@ -272,6 +293,30 @@ const AdminStack = () => {
                     headerTintColor: Colors.onPrimary,
                     headerStatusBarHeight: Spacing * 4,
                     title: 'Investments',
+                    drawerActiveTintColor: Colors.onPrimary,
+                    drawerActiveBackgroundColor: Colors.primary,
+                    drawerInactiveTintColor: Colors.primary,
+                    drawerInactiveBackgroundColor: Colors.onPrimary,
+                    drawerLabelStyle: {
+                        fontSize: FontSize.medium,
+                        textAlign: 'center',
+                        fontFamily: 'poppins-semibold'
+                    }
+                }}
+            />
+            <Drawer.Screen
+                name='UserWithdrawals'
+                component={UserWithdrawalsStack}
+                options={{
+                    headerTitle: 'Withdrawals',
+                    headerTitleStyle: {
+                        fontSize: 25,
+                        fontFamily: 'poppins-semibold'
+                    },
+                    headerStyle: { backgroundColor: Colors.primary, },
+                    headerTintColor: Colors.onPrimary,
+                    headerStatusBarHeight: Spacing * 4,
+                    title: 'Withdrawals',
                     drawerActiveTintColor: Colors.onPrimary,
                     drawerActiveBackgroundColor: Colors.primary,
                     drawerInactiveTintColor: Colors.primary,

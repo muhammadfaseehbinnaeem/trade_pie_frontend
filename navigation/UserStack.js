@@ -12,32 +12,15 @@ import UserDashboardScreen from '../screens/UserDashboardScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import InvestMoneyScreen from '../screens/InvestMoneyScreen';
-import MyInvestmentsScreen from '../screens/MyInvestmentsScreen';
-import FocusedInvestmentScreen from '../screens/FocusedInvestmentScreen';
+import WithdrawMoneyScreen from '../screens/WithdrawMoneyScreen';
 import MyReferralCommissionsScreen from '../screens/MyReferralCommissionsScreen';
 import FocusedReferralCommissionScreen from '../screens/FocusedReferralCommissionScreen';
 import MyTeamCommissionsScreen from '../screens/MyTeamCommissionsScreen';
 import FocusedTeamCommissionScreen from '../screens/FocusedTeamCommissionScreen';
-
-const UserInvestmentStack = () => {
-    const Stack = createNativeStackNavigator();
-
-    return (
-        <Stack.Navigator
-            initialRouteName='MyInvestments'
-            screenOptions={{ headerShown: false }}
-        >
-            <Stack.Screen
-                name="MyInvestments"
-                component={MyInvestmentsScreen}
-            />
-            <Stack.Screen
-                name="FocusedInvestment"
-                component={FocusedInvestmentScreen}
-            />
-        </Stack.Navigator>
-    );
-};
+import MyInvestmentsScreen from '../screens/MyInvestmentsScreen';
+import FocusedInvestmentScreen from '../screens/FocusedInvestmentScreen';
+import MyWithdrawalsScreen from '../screens/MyWithdrawalsScreen';
+import FocusedWithdrawalScreen from '../screens/FocusedWithdrawalScreen';
 
 const UserReferralCommissionStack = () => {
     const Stack = createNativeStackNavigator();
@@ -77,6 +60,45 @@ const UserTeamCommissionStack = () => {
             />
         </Stack.Navigator>
     )
+};
+
+const UserInvestmentStack = () => {
+    const Stack = createNativeStackNavigator();
+
+    return (
+        <Stack.Navigator
+            initialRouteName='MyInvestments'
+            screenOptions={{ headerShown: false }}
+        >
+            <Stack.Screen
+                name="MyInvestments"
+                component={MyInvestmentsScreen}
+            />
+            <Stack.Screen
+                name="FocusedInvestment"
+                component={FocusedInvestmentScreen}
+            />
+        </Stack.Navigator>
+    );
+};
+const UserWithdrawalStack = () => {
+    const Stack = createNativeStackNavigator();
+
+    return (
+        <Stack.Navigator
+            initialRouteName='MyWithdrawals'
+            screenOptions={{ headerShown: false }}
+        >
+            <Stack.Screen
+                name="MyWithdrawals"
+                component={MyWithdrawalsScreen}
+            />
+            <Stack.Screen
+                name="FocusedWithdrawal"
+                component={FocusedWithdrawalScreen}
+            />
+        </Stack.Navigator>
+    );
 };
 
 const UserStack = () => {
@@ -186,6 +208,30 @@ const UserStack = () => {
                 }}
             />
             <Drawer.Screen
+                name='WithdrawMoney'
+                component={WithdrawMoneyScreen}
+                options={{
+                    headerTitle: 'Withdraw Money',
+                    headerTitleStyle: {
+                        fontSize: 25,
+                        fontFamily: 'poppins-semibold',
+                    },
+                    headerStyle: { backgroundColor: Colors.primary, },
+                    headerTintColor: Colors.onPrimary,
+                    headerStatusBarHeight: Spacing * 4,
+                    title: 'Withdraw Money',
+                    drawerActiveTintColor: Colors.onPrimary,
+                    drawerActiveBackgroundColor: Colors.primary,
+                    drawerInactiveTintColor: Colors.primary,
+                    drawerInactiveBackgroundColor: Colors.onPrimary,
+                    drawerLabelStyle: {
+                        fontSize: FontSize.medium,
+                        textAlign: 'center',
+                        fontFamily: 'poppins-semibold'
+                    }
+                }}
+            />
+            <Drawer.Screen
                 name='UserReferralCommission'
                 component={UserReferralCommissionStack}
                 options={{
@@ -246,6 +292,30 @@ const UserStack = () => {
                     headerTintColor: Colors.onPrimary,
                     headerStatusBarHeight: Spacing * 4,
                     title: 'My Investments',
+                    drawerActiveTintColor: Colors.onPrimary,
+                    drawerActiveBackgroundColor: Colors.primary,
+                    drawerInactiveTintColor: Colors.primary,
+                    drawerInactiveBackgroundColor: Colors.onPrimary,
+                    drawerLabelStyle: {
+                        fontSize: FontSize.medium,
+                        textAlign: 'center',
+                        fontFamily: 'poppins-semibold'
+                    }
+                }}
+            />
+            <Drawer.Screen
+                name='UserWithdrawal'
+                component={UserWithdrawalStack}
+                options={{
+                    headerTitle: 'My Withdrawals',
+                    headerTitleStyle: {
+                        fontSize: 25,
+                        fontFamily: 'poppins-semibold',
+                    },
+                    headerStyle: { backgroundColor: Colors.primary, },
+                    headerTintColor: Colors.onPrimary,
+                    headerStatusBarHeight: Spacing * 4,
+                    title: 'My Withdrawals',
                     drawerActiveTintColor: Colors.onPrimary,
                     drawerActiveBackgroundColor: Colors.primary,
                     drawerInactiveTintColor: Colors.primary,

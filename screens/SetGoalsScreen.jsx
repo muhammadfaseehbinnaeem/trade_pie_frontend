@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-    SafeAreaView,
     Text,
     View,
     TouchableOpacity,
@@ -99,11 +98,6 @@ const SetGoalsScreen = ({ navigation }) => {
     };
 
     const setHandler = () => {
-        if (requestData.goals === '') {
-            ErrorAlert('Goals are required.');
-            return;
-        }
-
         Alert.alert(
             'Set Goals',
             'Are you sure you want to set goals?',
@@ -145,7 +139,7 @@ const SetGoalsScreen = ({ navigation }) => {
                                 onChangeText={(text) => setRequestData({ ...requestData, goals: text })}
 
                             />
-                            </View>
+                        </View>
                         <TouchableOpacity
                             style={{
                                 padding: Spacing,

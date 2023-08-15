@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Text,
     View,
@@ -299,21 +299,7 @@ const UserDashboardScreen = ({ navigation }) => {
                             {Currency}{userInfo?.withdrawal}
                         </Text>
                     </View>
-                    <View style={{ marginTop: Spacing * 4 }}>
-                        <TouchableOpacity onPress={() => toggleModal('referralCode')}>
-                            <Text
-                                style={{
-                                    fontFamily: 'poppins-semibold',
-                                    fontSize: FontSize.small,
-                                    color: Colors.primary,
-                                    alignSelf: 'center'
-                                }}
-                            >
-                                My referral code
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ marginTop: Spacing }}>
+                    <View style={{ marginTop: Spacing * 3 }}>
                         <TouchableOpacity onPress={() => toggleModal('goals')}>
                             <Text
                                 style={{
@@ -324,6 +310,20 @@ const UserDashboardScreen = ({ navigation }) => {
                                 }}
                             >
                                 My goals
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ marginTop: Spacing }}>
+                        <TouchableOpacity onPress={() => toggleModal('referralCode')}>
+                            <Text
+                                style={{
+                                    fontFamily: 'poppins-semibold',
+                                    fontSize: FontSize.small,
+                                    color: Colors.primary,
+                                    alignSelf: 'center'
+                                }}
+                            >
+                                My referral code
                             </Text>
                         </TouchableOpacity>
                     </View>
