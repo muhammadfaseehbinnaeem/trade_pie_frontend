@@ -43,7 +43,7 @@ const LogoutButton = (props) => {
                 style={{
                     flex: 1,
                     justifyContent: 'flex-end',
-                    marginTop: '30%',
+                    marginTop: '40%',
                 }}
             >
                 <View

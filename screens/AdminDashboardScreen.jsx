@@ -302,7 +302,6 @@ const AdminDashboardScreen = ({ navigation }) => {
                             backgroundColor: Colors.onPrimary,
                             paddingVertical: Spacing,
                             marginVertical: Spacing / 2,
-                            marginBottom: Spacing * 3,
                             borderRadius: Spacing
                         }}
                     >
@@ -323,6 +322,115 @@ const AdminDashboardScreen = ({ navigation }) => {
                             }}
                         >
                             {dashboardData?.pendingInvestmentsCount}
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            alignItems: 'flex-start',
+                            marginLeft: Spacing,
+                            marginTop: Spacing * 3,
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: FontSize.xLarge,
+                                color: Colors.primary,
+                                fontFamily: 'poppins-semibold',
+                                marginVertical: Spacing
+                            }}
+                        >
+                            Withdrawals
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            backgroundColor: Colors.onPrimary,
+                            paddingVertical: Spacing,
+                            marginVertical: Spacing / 2,
+                            borderRadius: Spacing
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingLeft: Spacing * 2
+                            }}
+                        >
+                            Approved:
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingRight: Spacing * 2
+                            }}
+                        >
+                            {dashboardData?.approvedWithdrawalsCount}
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            backgroundColor: Colors.onPrimary,
+                            paddingVertical: Spacing,
+                            marginVertical: Spacing / 2,
+                            borderRadius: Spacing
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingLeft: Spacing * 2
+                            }}
+                        >
+                            Rejected:
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingRight: Spacing * 2
+                            }}
+                        >
+                            {dashboardData?.rejectedWithdrawalsCount}
+                        </Text>
+                    </View>
+                    <View
+                        style={{
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            backgroundColor: Colors.onPrimary,
+                            paddingVertical: Spacing,
+                            marginVertical: Spacing / 2,
+                            marginBottom: Spacing * 3,
+                            borderRadius: Spacing
+                        }}
+                    >
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingLeft: Spacing * 2
+                            }}
+                        >
+                            Pending:
+                        </Text>
+                        <Text
+                            style={{
+                                fontSize: FontSize.large,
+                                fontFamily: 'poppins-regular',
+                                paddingRight: Spacing * 2
+                            }}
+                        >
+                            {dashboardData?.pendingWithdrawalsCount}
                         </Text>
                     </View>
                     <View style={ styles.horizontalSpacer } />

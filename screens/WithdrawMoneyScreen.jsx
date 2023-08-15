@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
 import {
     Text,
@@ -13,46 +12,49 @@ import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
 import Colors from '../constants/Colors';
 import { useCustomFonts } from '../constants/Font';
+import Currency from '../constants/Currency';
 import { useHttpClient } from '../hooks/http-hook';
+import Footer from '../components/Footer';
 import AppTextInput from '../components/AppTextInput';
 import Loader from '../components/Loader';
 import ErrorAlert from '../components/ErrorAlert';
-import Footer from '../components/Footer';
 
-const ProfileScreen = ({ navigation }) => {
+const WithdrawMoneyScreen = ({ navigation }) => {
     const { error, sendRequest, clearError } = useHttpClient();
-    const [requestData, setRequestData] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [wallet, setWallet] = useState(0);
+    const [requestData, setRequestData] = useState({});
     const fontsLoaded = useCustomFonts();
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            const getUserProfile = async () => {
+            const getUserWallet = async () => {
                 setIsLoading(true);
-
+                
                 try {
                     const responseData = await sendRequest(
-                        '/api/users/profile',
+                        '/api/users/wallet',
                         'GET',
                         null,
                         {'Content-Type': 'application/json'}
                     );
                     
                     if (responseData.success) {
-                        setRequestData(responseData.data);
+                        setWallet(responseData?.data?.wallet);
                     } else {
-                        ErrorAlert(responseData?.error?.message);
+                        ErrorAlert(responseData?.error?.message)
                     }
                 } catch (err) {
                     console.log(err);
                 }
-
+                
+                setRequestData({ amount: 0 });
                 setIsLoading(false);
             };
-
-            getUserProfile();
+            
+            getUserWallet();
         });
-    
+        
         return unsubscribe;
     }, [navigation]);
 
@@ -60,77 +62,55 @@ const ProfileScreen = ({ navigation }) => {
         return <Loader />;
     }
 
-    const alertOkHandler = () => {
+    const withdrawalAlertOkHandler = () => {
         navigation.navigate('UserDashboard');
         setIsLoading(false);
     };
 
-    const updateAlertYesHandler = async () => {
+    const requestHandler = async () => {
+        if (Number(requestData.amount) === 0) {
+            return ErrorAlert('Amount is required.');
+        }
+
+        if (Number(requestData.amount) > wallet) {
+            return ErrorAlert('Not sufficent balance.');
+        }
+        
         setIsLoading(true);
 
         try {
             const responseData = await sendRequest(
-                '/api/users/profile',
-                'PUT',
+                '/api/withdrawals',
+                'POST',
                 JSON.stringify(requestData),
                 {'Content-Type': 'application/json'}
             );
-            
-            if (responseData.success) {
-                let updatedUserInfo = responseData.data;
-                
-                AsyncStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
 
-                return (
-                    Alert.alert(
-                        'User Profile',
-                        'Updated successfully.',
-                        [{
-                            text: 'OK',
-                            onPress: () => alertOkHandler()
-                        }],
-                        {cancelable: false}
-                    )
+            if (responseData.success) {
+                Alert.alert(
+                    'Withdrawal',
+                    `${Currency}${responseData?.amount} requested successfully.`,
+                    [{
+                        text: 'OK',
+                        onPress: () => withdrawalAlertOkHandler()
+                    }],
+                    { cancelable: false }
                 );
             } else {
                 ErrorAlert(responseData?.error?.message);
-            }
+            }            
         } catch (err) {
-            console.log(err);
+          console.log(err);
         }
 
         setIsLoading(false);
     };
 
-    const updateHandler = () => {
-        if (
-            requestData.name === '' ||
-            requestData.accountNumber === '' ||
-            requestData.accountType === ''
-        ) {
-            ErrorAlert('All fields are required.');
-            return;
-        }
-
-        Alert.alert(
-            'Update Profile',
-            'Are you sure you want to update your profile?',
-            [
-                {
-                    text: 'YES',
-                    onPress: () => updateAlertYesHandler()
-                },
-                { text: 'NO' }
-            ],
-            { cancelable: false }
-        );
-    };
-
     return (
-        <View style={styles.container} >
+        <View style={styles.mainContainer}>
             <View style={styles.body}>
                 <ScrollView>
-                    <View style={{ alignItems: 'center' }}>
+                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <Text
                             style={{
                             fontSize: FontSize.xLarge,
@@ -139,26 +119,31 @@ const ProfileScreen = ({ navigation }) => {
                             marginVertical: Spacing * 3
                             }}
                         >
-                            Enter Profile Details
+                            Enter Waithdrawal Details
                         </Text>
+                    </View>
+                    <View style={{marginVertical: Spacing}}>
+                        <View style={styles.card}>
+                            <Text
+                                style={{
+                                    fontFamily: 'poppins-bold',
+                                    fontSize: FontSize.large,
+                                    marginBottom: Spacing,
+                                    color: Colors.text
+                                }}
+                            >
+                                Available Amount
+                            </Text>
+                            <Text style={styles.text}>
+                                Wallet: {Currency}{wallet}
+                            </Text>
+                        </View>
                     </View>
                     <View style={{ marginBottom: Spacing * 3 }}>
                         <AppTextInput
-                            value={requestData?.name}
-                            placeholder='Name'
-                            maxLength={15}
-                            onChangeText={(text) => setRequestData({ ...requestData, name: text })}
-                        />
-                        <AppTextInput
-                            value={requestData?.accountNumber}
-                            placeholder='Account Number e.g. 03001234567'
+                            placeholder={`Enter amount in ${Currency}`}
                             keyboardType='numeric'
-                            onChangeText={(text) => setRequestData({ ...requestData, accountNumber: text })}
-                        />
-                        <AppTextInput
-                            value={requestData?.accountType}
-                            placeholder='Account Type e.g. Jazzcash/Easypaisa'
-                            onChangeText={(text) => setRequestData({ ...requestData, accountType: text })}
+                            onChangeText={(text) => setRequestData({ ...requestData, amount: text })}
                         />
                     </View>
                     <View>
@@ -177,7 +162,7 @@ const ProfileScreen = ({ navigation }) => {
                                 shadowOpacity: 0.3,
                                 shadowRadius: Spacing
                             }}
-                            onPress={() => updateHandler()}
+                            onPress={() => requestHandler()}
                         >
                             <Text
                                 style={{
@@ -186,8 +171,8 @@ const ProfileScreen = ({ navigation }) => {
                                     fontSize: FontSize.large,
                                     textAlign: 'center'
                                 }}
-                    >
-                                Update
+                            >
+                                Request
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -200,7 +185,7 @@ const ProfileScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
+    mainContainer: {
         flex: 1,
         justifyContent: 'center'
     },
@@ -214,6 +199,24 @@ const styles = StyleSheet.create({
         paddingHorizontal: Spacing * 2,
         marginHorizontal: Spacing * 15
     },
+    container: {
+        paddingHorizontal: Spacing * 2,
+        paddingVertical: Spacing,
+        marginVertical: Spacing * 1.5,
+    },
+    card: {
+        backgroundColor: Colors.onPrimary,
+        paddingHorizontal: Spacing * 2,
+        paddingVertical: Spacing * 1.5,
+        marginBottom: Spacing * 3,
+        borderRadius: Spacing,
+    },
+    text: {
+        fontFamily: 'poppins-regular',
+        fontSize: FontSize.medium,
+        marginBottom: Spacing / 2,
+        color: Colors.text,
+    }
 });
 
-export default ProfileScreen;
+export default WithdrawMoneyScreen;

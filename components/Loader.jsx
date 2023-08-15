@@ -1,7 +1,6 @@
 import { View, ActivityIndicator } from "react-native";
 
 import Colors from "../constants/Colors";
-import Spacing from "../constants/Spacing";
 
 const Loader = ({ ...otherProps }) => {
     return (

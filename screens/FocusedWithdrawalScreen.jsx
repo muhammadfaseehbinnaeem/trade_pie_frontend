@@ -19,49 +19,49 @@ import Footer from '../components/Footer';
 import Loader from '../components/Loader';
 import ErrorAlert from '../components/ErrorAlert';
 
-const FocusedInvestmentScreen = ({ navigation }) => {
+const FocusedWithdrawalScreen = ({ navigation }) => {
     const { userInfo } = useContext(AuthContext);
     const { error, sendRequest, clearError } = useHttpClient();
     const [isLoading, setIsLoading] = useState(false);
-    const [investmentData, setInvestmentData] = useState({});
+    const [withdrawalData, setWithdrawalData] = useState({});
     const fontsLoaded = useCustomFonts();
-    const investmentId = useRoute().params?.investmentId;
+    const withdrawalId = useRoute().params?.withdrawalId;
     
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            const getInvestmentById = async () => {
+            const getWithdrawalById = async () => {
                 setIsLoading(true);
                     
                 try {
                     const responseData = await sendRequest(
-                        `/api/investments/${investmentId}`,
+                        `/api/withdrawals/${withdrawalId}`,
                         'GET',
                         null,
                         {'Content-Type': 'application/json'}
                     );
                     
                     if (responseData.success) {
-                        const investmentArray = responseData.data;
+                        const withdrawalArray = responseData.data;
 
-                        if (!investmentArray.isActive && investmentArray.isApproved) {
-                            setInvestmentData({
-                                ...investmentArray,
+                        if (!withdrawalArray.isActive && withdrawalArray.isApproved) {
+                            setWithdrawalData({
+                                ...withdrawalArray,
                                 status: 'Approved',
                                 color: 'green'
                             });
                         }
                         
-                        if (!investmentArray.isActive && !investmentArray.isApproved) {
-                            setInvestmentData({
-                                ...investmentArray,
+                        if (!withdrawalArray.isActive && !withdrawalArray.isApproved) {
+                            setWithdrawalData({
+                                ...withdrawalArray,
                                 status: 'Rejected',
                                 color: 'red'
                             });
                         }
                         
-                        if (investmentArray.isActive && !investmentArray.isApproved) {
-                            setInvestmentData({
-                                ...investmentArray,
+                        if (withdrawalArray.isActive && !withdrawalArray.isApproved) {
+                            setWithdrawalData({
+                                ...withdrawalArray,
                                 status: 'Pending',
                                 color: 'orange'
                             });
@@ -76,39 +76,39 @@ const FocusedInvestmentScreen = ({ navigation }) => {
                 setIsLoading(false);
             };
     
-            getInvestmentById();
+            getWithdrawalById();
         });
       
         return unsubscribe;
-    }, [navigation, investmentId]);
+    }, [navigation, withdrawalId]);
 
     if (!fontsLoaded || isLoading) {
         return <Loader />;
     }
 
     const alertOkHandler = () => {
-        navigation.navigate('Investments');
+        navigation.navigate('Withdrawals');
         setIsLoading(false);
     };
 
     const approveAlertYesHandler = async() => {
-        investmentData.isActive = false;
-        investmentData.isApproved = true;
-        investmentData.status = 'Approved';
+        withdrawalData.isActive = false;
+        withdrawalData.isApproved = true;
+        withdrawalData.status = 'Approved';
         setIsLoading(true);
 
         try {
             const responseData = await sendRequest(
-                `/api/investments/${investmentData._id}`,
+                `/api/withdrawals/${withdrawalData._id}`,
                 'PUT',
-                JSON.stringify(investmentData),
+                JSON.stringify(withdrawalData),
                 {'Content-Type': 'application/json'}
             );
             
             if (responseData.success) {
                 return (
                     Alert.alert(
-                        'Investment',
+                        'Withdrawal',
                         'Approved successfully.',
                         [{
                             text: 'OK',
@@ -128,23 +128,23 @@ const FocusedInvestmentScreen = ({ navigation }) => {
     };
 
     const rejectAlertYesHandler = async() => {
-        investmentData.isActive = false;
-        investmentData.isApproved = false;
-        investmentData.status = 'Rejected';
+        withdrawalData.isActive = false;
+        withdrawalData.isApproved = false;
+        withdrawalData.status = 'Rejected';
         setIsLoading(true);
 
         try {
             const responseData = await sendRequest(
-                `/api/investments/${investmentData._id}`,
+                `/api/withdrawals/${withdrawalData._id}`,
                 'PUT',
-                JSON.stringify(investmentData),
+                JSON.stringify(withdrawalData),
                 {'Content-Type': 'application/json'}
             );
             
             if (responseData.success) {
                 return (
                     Alert.alert(
-                        'Investment',
+                        'Withdrawal',
                         'Rejected successfully.',
                         [{
                             text: 'OK',
@@ -165,8 +165,8 @@ const FocusedInvestmentScreen = ({ navigation }) => {
 
     const approveHandler = () => {
         Alert.alert(
-            'Approve Investment',
-            'Are you sure you want to approve this investment?',
+            'Approve Withdrawal',
+            'Are you sure you want to approve this withdrawal?',
             [
                 {
                     text: 'YES',
@@ -180,8 +180,8 @@ const FocusedInvestmentScreen = ({ navigation }) => {
     
     const rejectHandler = () => {
         Alert.alert(
-            'Reject Investment',
-            'Are you sure you want to reject this investment?',
+            'Reject Withdrawal',
+            'Are you sure you want to reject this withdrawal?',
             [
                 {
                     text: 'YES',
@@ -197,31 +197,25 @@ const FocusedInvestmentScreen = ({ navigation }) => {
         <View style={styles.mainContainer}>
             <View style={styles.body}>
                 <ScrollView contentContainerStyle={styles.container}>
-                    <Image
-                        source={{uri: `${baseUrl}/${investmentData.image}`}}
-                        style={styles.image}
-                        resizeMode="cover"
-                    />
                     <View style={styles.card}>
-                        <Text>ID: {investmentData._id}</Text>
-                        <Text>User ID: {investmentData.userId}</Text>
-                        <Text>Name: {investmentData.userName}</Text>
-                        <Text>Account Number: {investmentData.userAccountNumber}</Text>
-                        <Text>Account Type: {investmentData.userAccountType}</Text>
-                        <Text>Amount: {Currency}{investmentData.amount}</Text>
+                        <Text>ID: {withdrawalData._id}</Text>
+                        <Text>User ID: {withdrawalData.userId}</Text>
+                        <Text>Name: {withdrawalData.userName}</Text>
+                        <Text>Account Number: {withdrawalData.userAccountNumber}</Text>
+                        <Text>Account Type: {withdrawalData.userAccountType}</Text>
+                        <Text>Amount: {Currency}{withdrawalData.amount}</Text>
                         <Text>
                             Status: {
-                                <Text style={[styles.status, { color: investmentData.color }]}>
-                                    {investmentData.status}
+                                <Text style={[styles.status, { color: withdrawalData.color }]}>
+                                    {withdrawalData.status}
                                 </Text>
                             }
                         </Text>
-                        <Text>Profit: {Currency}{investmentData.profit}</Text>
                         {
                             (
                                 userInfo.isAdmin &&
-                                investmentData.status !== 'Approved' &&
-                                investmentData.status !== 'Rejected'
+                                withdrawalData.status !== 'Approved' &&
+                                withdrawalData.status !== 'Rejected'
                             ) ?
                             (
                                 <View style={styles.buttonsContainer}>
@@ -311,4 +305,4 @@ const styles = StyleSheet.create({
     },
     });
 
-export default FocusedInvestmentScreen;
+export default FocusedWithdrawalScreen;

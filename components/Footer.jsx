@@ -18,7 +18,7 @@ const Footer = () => {
     let link;
 
     if (reference === 'Link') {
-      link = 'https://chat.whatsapp.com/DMgVW3BGvxeFJPqWCksA6M';    
+      link = 'https://chat.whatsapp.com/DMgVW3BGvxeFJPqWCksA6M';
     } else if ( reference === 'Gmail') {
       link = 'mailto:www.tradepie@gmail.com';
     } else {

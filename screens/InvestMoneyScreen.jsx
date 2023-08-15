@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-    SafeAreaView,
     Text,
     View,
     TouchableOpacity,
@@ -49,7 +48,7 @@ const InvestMoneyScreen = ({ navigation }) => {
                     );
                     
                     if (responseData.success) {
-                        setPaymentAccountDetails(responseData.data);
+                        setPaymentAccountDetails(responseData?.data);
                     } else {
                         ErrorAlert(responseData?.error?.message)
                     }
@@ -240,7 +239,7 @@ const InvestMoneyScreen = ({ navigation }) => {
                             </Text>
                         <Text style={styles.separator}></Text>
                         <AppTextInput
-                            placeholder='Enter Amount in Rs.'
+                            placeholder={`Enter amount in ${Currency}`}
                             keyboardType='numeric'
                             onChangeText={(text) => setAmount(text)}
                         />

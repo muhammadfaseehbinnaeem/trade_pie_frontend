@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
 import {
     Text,
@@ -13,13 +12,14 @@ import Spacing from '../constants/Spacing';
 import FontSize from '../constants/FontSize';
 import Colors from '../constants/Colors';
 import { useCustomFonts } from '../constants/Font';
+import Currency from '../constants/Currency'
 import { useHttpClient } from '../hooks/http-hook';
 import AppTextInput from '../components/AppTextInput';
 import Loader from '../components/Loader';
 import ErrorAlert from '../components/ErrorAlert';
 import Footer from '../components/Footer';
 
-const ProfileScreen = ({ navigation }) => {
+const SetMarginsScreen = ({ navigation }) => {
     const { error, sendRequest, clearError } = useHttpClient();
     const [requestData, setRequestData] = useState({});
     const [isLoading, setIsLoading] = useState(false);
@@ -27,12 +27,12 @@ const ProfileScreen = ({ navigation }) => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            const getUserProfile = async () => {
+            const getMargins = async () => {
                 setIsLoading(true);
 
                 try {
                     const responseData = await sendRequest(
-                        '/api/users/profile',
+                        '/api/admin/margins',
                         'GET',
                         null,
                         {'Content-Type': 'application/json'}
@@ -40,6 +40,7 @@ const ProfileScreen = ({ navigation }) => {
                     
                     if (responseData.success) {
                         setRequestData(responseData.data);
+
                     } else {
                         ErrorAlert(responseData?.error?.message);
                     }
@@ -50,7 +51,7 @@ const ProfileScreen = ({ navigation }) => {
                 setIsLoading(false);
             };
 
-            getUserProfile();
+            getMargins();
         });
     
         return unsubscribe;
@@ -61,30 +62,26 @@ const ProfileScreen = ({ navigation }) => {
     }
 
     const alertOkHandler = () => {
-        navigation.navigate('UserDashboard');
+        navigation.navigate('AdminDashboard');
         setIsLoading(false);
     };
 
-    const updateAlertYesHandler = async () => {
+    const setAlertYesHandler = async () => {
         setIsLoading(true);
 
         try {
             const responseData = await sendRequest(
-                '/api/users/profile',
+                '/api/admin/margins',
                 'PUT',
                 JSON.stringify(requestData),
                 {'Content-Type': 'application/json'}
             );
             
             if (responseData.success) {
-                let updatedUserInfo = responseData.data;
-                
-                AsyncStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
-
                 return (
                     Alert.alert(
-                        'User Profile',
-                        'Updated successfully.',
+                        'Margins',
+                        'Set successfully.',
                         [{
                             text: 'OK',
                             onPress: () => alertOkHandler()
@@ -102,23 +99,27 @@ const ProfileScreen = ({ navigation }) => {
         setIsLoading(false);
     };
 
-    const updateHandler = () => {
+    const setHandler = () => {
         if (
-            requestData.name === '' ||
-            requestData.accountNumber === '' ||
-            requestData.accountType === ''
+            requestData.referralCommission === '' ||
+            requestData.teamCommission === '' ||
+            requestData.profitRange1 === '' ||
+            requestData.profitRange2 === '' ||
+            requestData.profitRange3 === '' ||
+            requestData.profitRange4 === '' ||
+            requestData.profitRange5 === ''
         ) {
             ErrorAlert('All fields are required.');
             return;
         }
 
         Alert.alert(
-            'Update Profile',
-            'Are you sure you want to update your profile?',
+            'Set Margins',
+            'Are you sure you want to set margins?',
             [
                 {
                     text: 'YES',
-                    onPress: () => updateAlertYesHandler()
+                    onPress: () => setAlertYesHandler()
                 },
                 { text: 'NO' }
             ],
@@ -139,26 +140,58 @@ const ProfileScreen = ({ navigation }) => {
                             marginVertical: Spacing * 3
                             }}
                         >
-                            Enter Profile Details
+                            Set Margins for Users
                         </Text>
                     </View>
                     <View style={{ marginBottom: Spacing * 3 }}>
+                        <Text style={{ marginTop: Spacing / 2 }}>Referral Commission</Text>
                         <AppTextInput
-                            value={requestData?.name}
-                            placeholder='Name'
-                            maxLength={15}
-                            onChangeText={(text) => setRequestData({ ...requestData, name: text })}
-                        />
-                        <AppTextInput
-                            value={requestData?.accountNumber}
-                            placeholder='Account Number e.g. 03001234567'
+                            value={String(requestData?.referralCommission)}
+                            placeholder={`Enter amount in ${Currency}`}
                             keyboardType='numeric'
-                            onChangeText={(text) => setRequestData({ ...requestData, accountNumber: text })}
+                            onChangeText={(text) => setRequestData({ ...requestData, referralCommission: text })}
                         />
+                        <Text style={{ marginTop: Spacing / 2 }}>Team Commission</Text>
                         <AppTextInput
-                            value={requestData?.accountType}
-                            placeholder='Account Type e.g. Jazzcash/Easypaisa'
-                            onChangeText={(text) => setRequestData({ ...requestData, accountType: text })}
+                            value={String(requestData?.teamCommission)}
+                            placeholder={`Enter amount in ${Currency}`}
+                            keyboardType='numeric'
+                            onChangeText={(text) => setRequestData({ ...requestData, teamCommission: text })}
+                        />
+                        <Text style={{ marginTop: Spacing / 2 }}>Profit for less than {Currency}10</Text>
+                        <AppTextInput
+                            value={String(requestData?.profitRange1)}
+                            placeholder={`Enter amount in ${Currency}`}
+                            keyboardType='numeric'
+                            onChangeText={(text) => setRequestData({ ...requestData, profitRange1: text })}
+                        />
+                        <Text style={{ marginTop: Spacing / 2 }}>Profit for {Currency}10-100</Text>
+                        <AppTextInput
+                            value={String(requestData?.profitRange2)}
+                            placeholder={`Enter amount in ${Currency}`}
+                            keyboardType='numeric'
+                            onChangeText={(text) => setRequestData({ ...requestData, profitRange2: text })}
+                        />
+                        <Text style={{ marginTop: Spacing / 2 }}>Profit for {Currency}100-500</Text>
+                        <AppTextInput
+                            value={String(requestData?.profitRange3)}
+                            placeholder={`Enter amount in ${Currency}`}
+                            keyboardType='numeric'
+                            onChangeText={(text) => setRequestData({ ...requestData, profitRange3: text })}
+                        />
+                        <Text style={{ marginTop: Spacing / 2 }}>Profit for {Currency}500-1000</Text>
+                        <AppTextInput
+                            value={String(requestData?.profitRange4)}
+                            placeholder={`Enter amount in ${Currency}`}
+                            keyboardType='numeric'
+                            onChangeText={(text) => setRequestData({ ...requestData, profitRange4: text })}
+                        />
+                        <Text style={{ marginTop: Spacing / 2 }}>Profit for greater than {Currency}1000</Text>
+                        <AppTextInput
+                            value={String(requestData?.profitRange5)}
+                            placeholder={`Enter amount in ${Currency}`}
+                            keyboardType='numeric'
+                            onChangeText={(text) => setRequestData({ ...requestData, profitRange5: text })}
                         />
                     </View>
                     <View>
@@ -177,7 +210,7 @@ const ProfileScreen = ({ navigation }) => {
                                 shadowOpacity: 0.3,
                                 shadowRadius: Spacing
                             }}
-                            onPress={() => updateHandler()}
+                            onPress={() => setHandler()}
                         >
                             <Text
                                 style={{
@@ -186,8 +219,8 @@ const ProfileScreen = ({ navigation }) => {
                                     fontSize: FontSize.large,
                                     textAlign: 'center'
                                 }}
-                    >
-                                Update
+                            >
+                                Set
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -208,7 +241,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: Spacing * 3,
+        marginVertical: Spacing * 3,
     },
     horizontalSpacer: {
         paddingHorizontal: Spacing * 2,
@@ -216,4 +249,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default ProfileScreen;
+export default SetMarginsScreen;

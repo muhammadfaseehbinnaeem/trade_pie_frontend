@@ -18,28 +18,28 @@ import { useHttpClient } from '../hooks/http-hook';
 import Loader from '../components/Loader';
 import ErrorAlert from '../components/ErrorAlert';
 
-const TeamCommissionsScreen = ({ navigation }) => {
+const MyWithdrawalsScreen = ({ navigation }) => {
     const { error, sendRequest, clearError } = useHttpClient();
-    const [teamCommissions, setTeamCommissions] = useState([]);
+    const [withdrawals, setWithdrawals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [status, setStatus] = useState('All');
     const fontsLoaded = useCustomFonts();
 
-    const teamCommissionsNotFoundAlertOkHandler = () => {
-        status === 'All' ? navigation.navigate('AdminDashboard') : navigation.navigate('UserTeamCommissions');
+    const withdrawalsNotFoundAlertOkHandler = () => {
+        status === 'All' ? navigation.navigate('UserDashboard') : navigation.navigate('UserWithdrawal');
         setStatus('All');
         setIsLoading(false);
     };
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            const getUserTeamCommissions = async () => {
+            const getUserWithdrawals = async () => {
                 setStatus('All');
                 setIsLoading(true);
 
                 try {
                     const response = await sendRequest(
-                        `/api/commissions/allteam/${status}`,
+                        `/api/withdrawals/profile/${status}`,
                         'GET',
                         null,
                         {'Content-Type': 'application/json'}
@@ -47,35 +47,39 @@ const TeamCommissionsScreen = ({ navigation }) => {
 
                     const responseData = JSON.parse(JSON.stringify(response));
                     
-                    if (responseData?.success) {
-                        let teamCommissionsData = responseData?.data;
-                        if (teamCommissionsData.length === 0) {
+                    if (responseData.success) {
+                        let withdrawalsData = responseData.data;
+                        if (withdrawalsData.length === 0) {
                             return (
                                 Alert.alert(
                                     'Message',
-                                    'No team commissions found in this category.',
+                                    `You don't have any withdrawals in this category.`,
                                     [{
                                         text: 'OK',
-                                        onPress: () => teamCommissionsNotFoundAlertOkHandler()
+                                        onPress: () => withdrawalsNotFoundAlertOkHandler()
                                     }],
                                     {cancelable: false}
                                 )
                             );
                         }
 
-                        const teamCommissionsArray = teamCommissionsData.map((teamCommission) => {
-                            if (!teamCommission.isActive && teamCommission.isApproved) {
-                                return { ...teamCommission, status: 'Approved', color: 'green' };
+                        const withdrawalsArray = withdrawalsData.map((withdrawal) => {
+                            if (!withdrawal.isActive && withdrawal.isApproved) {
+                                return { ...withdrawal, status: 'Approved', color: 'green' };
                             }
                             
-                            if (teamCommission.isActive && !teamCommission.isApproved) {
-                                return { ...teamCommission, status: 'Pending', color: 'orange' };
+                            if (!withdrawal.isActive && !withdrawal.isApproved) {
+                                return { ...withdrawal, status: 'Rejected', color: 'red' };
+                            }
+                            
+                            if (withdrawal.isActive && !withdrawal.isApproved) {
+                                return { ...withdrawal, status: 'Pending', color: 'orange' };
                             }
 
-                            return teamCommission;
+                            return withdrawal;
                         });
 
-                        setTeamCommissions(teamCommissionsArray);
+                        setWithdrawals(withdrawalsArray);
                     } else {
                         ErrorAlert(responseData?.error?.message);
                     }
@@ -86,15 +90,15 @@ const TeamCommissionsScreen = ({ navigation }) => {
                 setIsLoading(false);
             };
 
-            getUserTeamCommissions();
+            getUserWithdrawals();
         });
 
-        const getFilteredTeamCommissions = async (req, res) => {
+        const getFilteredWithdrawals = async (req, res) => {
             setIsLoading(true);
 
             try {
                 const response = await sendRequest(
-                    `/api/commissions/allteam/${status}`,
+                    `/api/withdrawals/profile/${status}`,
                     'GET',
                     null,
                     {'Content-Type': 'application/json'}
@@ -102,35 +106,39 @@ const TeamCommissionsScreen = ({ navigation }) => {
 
                 const responseData = JSON.parse(JSON.stringify(response));
                 
-                if (responseData?.success) {
-                    let teamCommissionsData = responseData?.data;
-                    if (teamCommissionsData.length === 0) {
+                if (responseData.success) {
+                    let withdrawalsData = responseData.data;
+                    if (withdrawalsData.length === 0) {
                         return (
                             Alert.alert(
                                 'Message',
-                                'No team commissions found in this category.',
+                                `You don't have any withdrawals in this category.`,
                                 [{
                                     text: 'OK',
-                                    onPress: () => teamCommissionsNotFoundAlertOkHandler()
+                                    onPress: () => withdrawalsNotFoundAlertOkHandler()
                                 }],
                                 {cancelable: false}
                             )
                         );
                     }
 
-                    const teamCommissionsArray = teamCommissionsData.map((teamCommission) => {
-                        if (!teamCommission.isActive && teamCommission.isApproved) {
-                            return { ...teamCommission, status: 'Approved', color: 'green' };
+                    const withdrawalsArray = withdrawalsData.map((withdrawal) => {
+                        if (!withdrawal.isActive && withdrawal.isApproved) {
+                            return { ...withdrawal, status: 'Approved', color: 'green' };
                         }
                         
-                        if (teamCommission.isActive && !teamCommission.isApproved) {
-                            return { ...teamCommission, status: 'Pending', color: 'orange' };
+                        if (!withdrawal.isActive && !withdrawal.isApproved) {
+                            return { ...withdrawal, status: 'Rejected', color: 'red' };
+                        }
+                        
+                        if (withdrawal.isActive && !withdrawal.isApproved) {
+                            return { ...withdrawal, status: 'Pending', color: 'orange' };
                         }
 
-                        return teamCommission;
+                        return withdrawal;
                     });
 
-                    setTeamCommissions(teamCommissionsArray);
+                    setWithdrawals(withdrawalsArray);
                 } else {
                     ErrorAlert(responseData?.error?.message);
                 }
@@ -141,7 +149,7 @@ const TeamCommissionsScreen = ({ navigation }) => {
             setIsLoading(false);
         };
         
-        getFilteredTeamCommissions();
+        getFilteredWithdrawals();
       
         return unsubscribe;
     }, [navigation, status]);
@@ -150,20 +158,20 @@ const TeamCommissionsScreen = ({ navigation }) => {
         return <Loader />;
     }
 
-    const teamCommissionCardHandler = async (item) => {
-        const params = { teamCommissionId: item._id };
+    const withdrawalCardHandler = async (item) => {
+        const params = { withdrawalId: item._id };
 
-        navigation.navigate('FocusedTeamCommission', params);
+        navigation.navigate('FocusedWithdrawal', params);
     };
 
     const renderCard = ({ item }) => (
-        <TouchableOpacity onPress={() => teamCommissionCardHandler(item)}>
+        <TouchableOpacity onPress={() => withdrawalCardHandler(item)}>
             <View style={styles.card}>
                 <Text style={styles.text}>
                     ID: {item._id}
                 </Text>
                 <Text style={styles.text}>
-                    From: {item.from}
+                    Amount: {Currency}{item.amount}
                 </Text>
                 <Text style={styles.text}>
                     Status: {
@@ -171,9 +179,6 @@ const TeamCommissionsScreen = ({ navigation }) => {
                             {item.status}
                         </Text>
                     }
-                </Text>
-                <Text style={styles.text}>
-                    Commission: {Currency}{item.commission}
                 </Text>
             </View>
         </TouchableOpacity>
@@ -193,10 +198,11 @@ const TeamCommissionsScreen = ({ navigation }) => {
             >
                 <Picker.Item label='All' value='All' />
                 <Picker.Item label='Approved' value='Approved' />
+                <Picker.Item label='Rejected' value='Rejected' />
                 <Picker.Item label='Pending' value='Pending' />
             </Picker>
             <FlatList
-                data={teamCommissions}
+                data={withdrawals}
                 renderItem={renderCard}
                 keyExtractor={(item) => item._id}
                 ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -269,4 +275,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default TeamCommissionsScreen;
+export default MyWithdrawalsScreen;

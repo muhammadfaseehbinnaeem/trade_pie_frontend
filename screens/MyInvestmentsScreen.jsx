@@ -26,7 +26,7 @@ const MyInvestmentsScreen = ({ navigation }) => {
     const fontsLoaded = useCustomFonts();
 
     const investmentsNotFoundAlertOkHandler = () => {
-        navigation.navigate('UserDashboard');
+        status === 'All' ? navigation.navigate('UserDashboard') : navigation.navigate('UserInvestment');
         setStatus('All');
         setIsLoading(false);
     };
